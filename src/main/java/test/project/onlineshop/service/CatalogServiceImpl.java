@@ -6,6 +6,7 @@ import test.project.onlineshop.entity.Catalog;
 import test.project.onlineshop.exception.CatalogNotFoundException;
 import test.project.onlineshop.repository.CatalogRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -22,5 +23,25 @@ public class CatalogServiceImpl implements CatalogService{
         }else {
             throw new CatalogNotFoundException("Catalog not found!");
         }
+    }
+
+    @Override
+    public List<Catalog> findAll() {
+        return (List<Catalog>) catalogRepository.findAll();
+    }
+
+    @Override
+    public Catalog addNewCatalog(Catalog catalog) {
+        return catalogRepository.save(catalog);
+    }
+
+    @Override
+    public void updateNameCatalogByCatalogId(Integer catalogId, String nameCatalog) {
+        catalogRepository.updateNameCatalogByCatalogId(catalogId, nameCatalog);
+    }
+
+    @Override
+    public void deleteCatalogByName(String nameCatalog) {
+        catalogRepository.deleteCatalogByNameCatalog(nameCatalog);
     }
 }

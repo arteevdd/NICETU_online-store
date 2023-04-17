@@ -1,6 +1,7 @@
 package test.project.onlineshop.entity;
 
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Table(name = "catalog")
+@AllArgsConstructor
 public class Catalog {
 
     @Id
@@ -17,7 +19,7 @@ public class Catalog {
     @Column(name = "catalog_id", nullable = false)
     private Integer catalogId;
 
-    @Column(name = "name_catalog")
+    @Column(name = "name_catalog", length = 50, nullable = false)
     private String nameCatalog;
 
     public Catalog() {
