@@ -29,24 +29,26 @@ public class Product {
     @Column(name = "count")
     private Integer count;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "producer_id")
     private Producer producerId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "productId")
     private Collection<Order> orders;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "productId")
     private Collection<ProductCategory> productCategories;
 
     public Product() {
     }
 
-    public Product(String nameProduct, Double price, Integer count) {
+    public Product(String nameProduct, Double price, Integer count, Producer producerId) {
         this.nameProduct = nameProduct;
         this.price = price;
         this.count = count;
+        this.producerId = producerId;
     }
 
     @Override
