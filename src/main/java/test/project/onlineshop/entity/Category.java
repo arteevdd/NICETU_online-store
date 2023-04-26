@@ -1,5 +1,6 @@
 package test.project.onlineshop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,6 +23,7 @@ public class Category {
     @Column(name = "name_category")
     private String nameCategory;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categoryId")
     private Collection<Category> categories;
 
@@ -29,6 +31,7 @@ public class Category {
     @JoinColumn(name = "parent_category_id")
     private Category parentCategoryId;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "parentCategoryId")
     private Collection<Category> parentCategories;
 

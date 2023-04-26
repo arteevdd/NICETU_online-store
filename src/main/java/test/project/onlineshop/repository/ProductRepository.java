@@ -21,9 +21,9 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     @Transactional
     @Modifying
-    @Query("UPDATE Product " +
-            "SET nameProduct = :nameProduct, price = :price, count = :count " +
-            "WHERE productId = :productId")
+    @Query("UPDATE Product p " +
+            "SET p.nameProduct = :nameProduct, p.price = :price, p.count = :count " +
+            "WHERE p.productId = :productId")
     void updateProductByProductId(@Param("productId") Integer productId,
                                   @Param("nameProduct") String nameProduct,
                                   @Param("price") Double price,
