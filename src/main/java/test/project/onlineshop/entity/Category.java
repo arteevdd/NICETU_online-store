@@ -1,6 +1,7 @@
 package test.project.onlineshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.util.Collection;
 @Getter
 @Setter
 @AllArgsConstructor
+//@JsonPropertyOrder({"parentCategoryId", "categoryId", "nameCategory"})
 @Table(name = "category")
 public class Category {
 
@@ -52,4 +54,5 @@ public class Category {
                 ", parentCategoryId=" + parentCategoryId +
                 '}';
     }
+
 }

@@ -25,12 +25,10 @@ public class Order {
     @Column(name = "price", nullable = false)
     private Double price;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "product_id")
     private Product productId;
 
-    @JsonIgnore
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cartId")
     private Cart cartId;
