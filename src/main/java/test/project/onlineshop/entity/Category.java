@@ -1,7 +1,6 @@
 package test.project.onlineshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +12,6 @@ import java.util.Collection;
 @Getter
 @Setter
 @AllArgsConstructor
-//@JsonPropertyOrder({"parentCategoryId", "categoryId", "nameCategory"})
 @Table(name = "category")
 public class Category {
 
@@ -30,20 +28,19 @@ public class Category {
     private Collection<Category> categories;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "parent_category_id")
-    private Category parentCategoryId;
+    @JoinColumn(name = "child_category_id")
+    private Category childCategoryId;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "parentCategoryId")
-    private Collection<Category> parentCategories;
+    @OneToMany(mappedBy = "childCategoryId")
+    private Collection<Category> childCategories;
 
     public Category() {
     }
 
-    public Category(Integer categoryId, String nameCategory, Category parentCategoryId) {
-        this.categoryId = categoryId;
+    public Category(String nameCategory, Category childCategoryId) {
         this.nameCategory = nameCategory;
-        this.parentCategoryId = parentCategoryId;
+        this.childCategoryId = childCategoryId;
     }
 
     @Override
@@ -51,8 +48,7 @@ public class Category {
         return "Category{" +
                 "categoryId=" + categoryId +
                 ", nameCategory='" + nameCategory + '\'' +
-                ", parentCategoryId=" + parentCategoryId +
+                ", childCategoryId=" + childCategoryId +
                 '}';
     }
-
 }

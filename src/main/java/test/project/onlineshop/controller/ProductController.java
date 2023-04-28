@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/online-shop")
 public class ProductController {
 
-    private ProductService productService;
+    private final ProductService productService;
 
     @Autowired
-    public void setProductService(ProductService productService) {
+    public ProductController(ProductService productService) {
         this.productService = productService;
     }
 

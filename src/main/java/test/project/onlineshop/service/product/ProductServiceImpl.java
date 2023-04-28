@@ -14,11 +14,15 @@ import java.util.Optional;
 @Service
 public class ProductServiceImpl implements ProductService{
 
-    @Autowired
-    private ProductRepository productRepository;
+    private final ProductRepository productRepository;
+
+    private final ProducerRepository producerRepository;
 
     @Autowired
-    private ProducerRepository producerRepository;
+    public ProductServiceImpl(ProductRepository productRepository, ProducerRepository producerRepository) {
+        this.productRepository = productRepository;
+        this.producerRepository = producerRepository;
+    }
 
     @Override
     public Product findProductByProductId(Integer productId) {

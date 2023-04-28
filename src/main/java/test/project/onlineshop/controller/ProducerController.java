@@ -17,10 +17,10 @@ import java.util.List;
 @RequestMapping("/online-shop")
 public class ProducerController {
 
-    private ProducerService producerService;
+    private final ProducerService producerService;
 
     @Autowired
-    public void setProducerService(ProducerService producerService) {
+    public ProducerController(ProducerService producerService) {
         this.producerService = producerService;
     }
 

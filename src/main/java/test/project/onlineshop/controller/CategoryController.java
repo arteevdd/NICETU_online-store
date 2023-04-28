@@ -18,8 +18,12 @@ import java.util.List;
 @RequestMapping("/online-shop")
 public class CategoryController {
 
+    private final CategoryService categoryService;
+
     @Autowired
-    private CategoryService categoryService;
+    public CategoryController(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
 
     @GetMapping("/categories/{categoryId}")
     public ResponseEntity<Category> findCategoryByCategoryId(@PathVariable("categoryId") Integer categoryId){

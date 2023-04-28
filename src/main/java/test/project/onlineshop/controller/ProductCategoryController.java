@@ -18,10 +18,10 @@ import java.util.List;
 @RequestMapping("/online-shop")
 public class ProductCategoryController {
 
-    private ProductCategoryService productCategoryService;
+    private final ProductCategoryService productCategoryService;
 
     @Autowired
-    public void setProductCategoryService(ProductCategoryService productCategoryService) {
+    public ProductCategoryController(ProductCategoryService productCategoryService) {
         this.productCategoryService = productCategoryService;
     }
 

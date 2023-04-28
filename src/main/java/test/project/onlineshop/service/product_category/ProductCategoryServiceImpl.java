@@ -12,8 +12,12 @@ import java.util.Optional;
 @Service
 public class ProductCategoryServiceImpl implements ProductCategoryService{
 
+    private final ProductCategoryRepository productCategoryRepository;
+
     @Autowired
-    private ProductCategoryRepository productCategoryRepository;
+    public ProductCategoryServiceImpl(ProductCategoryRepository productCategoryRepository) {
+        this.productCategoryRepository = productCategoryRepository;
+    }
 
     @Override
     public ProductCategory findProductCategoryByProductCategoryId(Integer productCategoryId) {

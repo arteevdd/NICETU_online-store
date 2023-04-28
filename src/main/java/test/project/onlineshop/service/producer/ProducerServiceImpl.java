@@ -12,8 +12,13 @@ import java.util.Optional;
 @Service
 public class ProducerServiceImpl implements ProducerService{
 
-    @Autowired
     private ProducerRepository producerRepository;
+
+    @Autowired
+    public ProducerServiceImpl(ProducerRepository producerRepository) {
+        this.producerRepository = producerRepository;
+    }
+
     @Override
     public Producer findProducerByProducerId(Integer producerId) {
         Optional<Producer> producer = producerRepository.findProducerByProducerId(producerId);
