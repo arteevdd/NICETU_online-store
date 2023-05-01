@@ -2,6 +2,7 @@ package test.project.onlineshop.service.category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import test.project.onlineshop.dto.CategoryDto;
 import test.project.onlineshop.entity.Category;
 import test.project.onlineshop.exception.CategoryNotFoundException;
 import test.project.onlineshop.repository.CategoryRepository;
@@ -30,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     @Override
-    public List<Category> findAll() {
-        return (List<Category>) categoryRepository.findAll();
+    public List<CategoryDto> findAllCustom() {
+        return (List<CategoryDto>) categoryRepository.findAllCustom();
     }
 }

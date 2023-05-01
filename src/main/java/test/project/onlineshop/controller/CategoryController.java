@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
+import test.project.onlineshop.dto.CategoryDto;
 import test.project.onlineshop.entity.Category;
 import test.project.onlineshop.exception.CategoryNotFoundException;
 import test.project.onlineshop.service.category.CategoryService;
@@ -35,9 +36,9 @@ public class CategoryController {
     }
 
     @GetMapping("/categories")
-    public ResponseEntity<List<Category>> findAllCategories(){
+    public ResponseEntity<List<CategoryDto>> findAllCustom(){
         try {
-            return new ResponseEntity<>(categoryService.findAll(), HttpStatus.OK);
+            return new ResponseEntity<>(categoryService.findAllCustom(), HttpStatus.OK);
         }catch (CategoryNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
