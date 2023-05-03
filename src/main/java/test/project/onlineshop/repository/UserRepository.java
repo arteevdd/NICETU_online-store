@@ -19,15 +19,6 @@ public interface UserRepository extends CrudRepository<User, Integer> {
 
     Iterable<User> findAll();
 
-//    @Modifying
-//    @Transactional
-//    @Query("UPDATE User u " +
-//            "SET u.firstName = :firstName, u.secondName = :secondName " +
-//            "WHERE u.userId = :userId")
-//    void updateUserInitials(@Param("userId") Integer userId,
-//                            @Param("firstName") String firstName,
-//                            @Param("secondName") String secondName);
-
     @Modifying
     @Transactional
     @Query("UPDATE User u " +
@@ -37,9 +28,5 @@ public interface UserRepository extends CrudRepository<User, Integer> {
                      @Param("email") String email);
 
     @Transactional
-    void deleteUserByEmail(String email);
-
-    @Transactional
     void deleteUserByUserId(Integer userId);
-
 }

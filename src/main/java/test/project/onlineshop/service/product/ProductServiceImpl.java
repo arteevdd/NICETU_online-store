@@ -2,7 +2,7 @@ package test.project.onlineshop.service.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.project.onlineshop.dto.ProductDto;
+import test.project.onlineshop.dto.ProductRequestDto;
 import test.project.onlineshop.entity.Product;
 import test.project.onlineshop.exception.ProductNotFoundException;
 import test.project.onlineshop.repository.ProducerRepository;
@@ -40,13 +40,13 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product addNewProduct(ProductDto productDto) {
+    public Product addNewProduct(ProductRequestDto productRequestDto) {
         return productRepository.save(
                 new Product(
-                        productDto.getNameProduct(),
-                        productDto.getPrice(),
-                        productDto.getCount(),
-                        producerRepository.findProducerByProducerId(productDto.getProducerId()).get()
+                        productRequestDto.getNameProduct(),
+                        productRequestDto.getPrice(),
+                        productRequestDto.getCount(),
+                        producerRepository.findProducerByProducerId(productRequestDto.getProducerId()).get()
                 )
         );
     }

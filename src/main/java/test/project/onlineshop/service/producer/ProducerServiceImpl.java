@@ -12,7 +12,7 @@ import java.util.Optional;
 @Service
 public class ProducerServiceImpl implements ProducerService{
 
-    private ProducerRepository producerRepository;
+    private final ProducerRepository producerRepository;
 
     @Autowired
     public ProducerServiceImpl(ProducerRepository producerRepository) {

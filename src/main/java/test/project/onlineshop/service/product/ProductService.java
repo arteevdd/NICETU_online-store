@@ -1,6 +1,6 @@
 package test.project.onlineshop.service.product;
 
-import test.project.onlineshop.dto.ProductDto;
+import test.project.onlineshop.dto.ProductRequestDto;
 import test.project.onlineshop.entity.Product;
 
 import java.util.List;
@@ -11,7 +11,7 @@ public interface ProductService {
 
     List<Product> findAll();
 
-    Product addNewProduct(ProductDto productDto);
+    Product addNewProduct(ProductRequestDto productRequestDto);
 
     void updateProductByProductId(Integer productId, String nameProduct, Double price, Integer count);
 

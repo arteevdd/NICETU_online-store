@@ -49,12 +49,6 @@ public class UserController {
         return new ResponseEntity<>(userService.addNewUser(user), HttpStatus.CREATED);
     }
 
-//    TODO: Посмотреть best practice по назначению URL!
-//    @PutMapping("/users/{userId}")
-//    public void updateUserInitials(@PathVariable("userId") Integer userId, @RequestBody Map<String, String> json){
-//        userService.updateUserInitials(userId, json.get("firstName"), json.get("secondName"));
-//    }
-
     @PutMapping("/users/{userId}")
     public void updateUserEmail(@PathVariable("userId") Integer userId, @RequestBody Map<String, String> json){
         userService.updateEmail(userId, json.get("email"));
@@ -69,5 +63,4 @@ public class UserController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
     }
-
 }

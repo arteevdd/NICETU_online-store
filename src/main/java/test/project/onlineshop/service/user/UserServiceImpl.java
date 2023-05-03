@@ -39,11 +39,6 @@ public class UserServiceImpl implements UserService{
         return userRepository.save(user);
     }
 
-//    @Override
-//    public void updateUserInitials(Integer userId, String firstName, String secondName) {
-//        userRepository.updateUserInitials(userId, firstName, secondName);
-//    }
-
     @Override
     public void updateEmail(Integer userId, String email) {
         userRepository.updateEmail(userId, email);
@@ -53,5 +48,4 @@ public class UserServiceImpl implements UserService{
     public void deleteUserByUserId(Integer userId) {
         userRepository.deleteUserByUserId(userId);
     }
-
 }

@@ -12,8 +12,6 @@ public interface UserService {
 
     User addNewUser(User user);
 
-//    void updateUserInitials(Integer userId, String firstName, String secondName);
-
     void updateEmail(Integer userId, String email);
 
     void deleteUserByUserId(Integer userId);

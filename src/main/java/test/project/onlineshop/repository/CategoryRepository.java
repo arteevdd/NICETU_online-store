@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 import test.project.onlineshop.dto.CategoryDto;
 import test.project.onlineshop.entity.Category;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -21,4 +20,8 @@ public interface CategoryRepository extends CrudRepository<Category, Integer> {
 
     @Query("SELECT new test.project.onlineshop.dto.CategoryDto(c.parentCategoryId.categoryId, c.categoryId, c.nameCategory) FROM Category c")
     Iterable<CategoryDto> findAllCustom();
+
+    @Query("SELECT c FROM Category c " +
+            "WHERE c.parentCategoryId.categoryId = :categoryId")
+    Iterable<Category> findSubCategories(@Param("categoryId") Integer categoryId);
 }

@@ -17,7 +17,6 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     Iterable<Product> findAll();
 
-    Optional<Product> findProductByNameProduct(String nameProduct);
 
     @Transactional
     @Modifying

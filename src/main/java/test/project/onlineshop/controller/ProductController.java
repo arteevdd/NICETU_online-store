@@ -6,7 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import test.project.onlineshop.dto.ProductDto;
+import test.project.onlineshop.dto.ProductRequestDto;
 import test.project.onlineshop.entity.Product;
 import test.project.onlineshop.exception.ProductNotFoundException;
 import test.project.onlineshop.service.product.ProductService;
@@ -46,8 +46,8 @@ public class ProductController {
     @PostMapping(value = "/products",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Product> addNewProduct (@RequestBody ProductDto productDto){
-        return new ResponseEntity<>(productService.addNewProduct(productDto), HttpStatus.CREATED);
+    public ResponseEntity<Product> addNewProduct (@RequestBody ProductRequestDto productRequestDto){
+        return new ResponseEntity<>(productService.addNewProduct(productRequestDto), HttpStatus.CREATED);
     }
 
     @PutMapping("/products/{productId}")
