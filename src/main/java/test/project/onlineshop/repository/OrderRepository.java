@@ -13,4 +13,6 @@ public interface OrderRepository extends CrudRepository<Order, Integer> {
 
     Iterable<Order> findAll();
 
+    Iterable<Order> findOrdersByCartId(Integer cartId);
+
 }

@@ -13,7 +13,13 @@ public class ProductRequestDto {
 
     private Double price;
 
+    private Double salePrice;
+
     private Integer count;
 
     private Integer producerId;
+
+    private String description;
+
+    private Integer saleId;
 }

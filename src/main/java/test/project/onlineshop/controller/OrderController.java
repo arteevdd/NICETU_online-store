@@ -2,12 +2,11 @@ package test.project.onlineshop.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import test.project.onlineshop.dto.OrderDto;
 import test.project.onlineshop.entity.Order;
 import test.project.onlineshop.exception.OrderNotFoundException;
 import test.project.onlineshop.service.order.OrderService;
@@ -42,5 +41,12 @@ public class OrderController {
         }catch (OrderNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }
+    }
+
+    @PostMapping(value = "/orders",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Order>> addNewOrders(@RequestBody List<OrderDto> orderDtos){
+        return new ResponseEntity<>(orderService.addNewOrders(orderDtos), HttpStatus.OK);
     }
 }

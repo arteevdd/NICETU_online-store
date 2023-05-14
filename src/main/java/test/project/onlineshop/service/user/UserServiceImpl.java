@@ -36,7 +36,19 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User addNewUser(User user) {
-        return userRepository.save(user);
+//        TODO: Переписать нормально
+        String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        if (user.getEmail().matches(emailPattern)){
+            Optional<User> tempUser = userRepository.findUserByEmail(user.getEmail());
+            if (!tempUser.isPresent()){
+                return userRepository.save(user);
+            }else {
+                throw new RuntimeException("User email: " + user.getEmail() + " exist!");
+            }
+
+        }else {
+            throw new IllegalArgumentException("Invalid email pattern");
+        }
     }
 
     @Override

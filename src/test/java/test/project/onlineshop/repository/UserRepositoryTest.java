@@ -7,11 +7,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import test.project.onlineshop.entity.User;
 
 import javax.transaction.Transactional;
-
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @Transactional
 @SpringBootTest

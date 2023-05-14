@@ -29,9 +29,19 @@ public class Product {
     @Column(name = "count")
     private Integer count;
 
+    @Column(name = "description", nullable = false)
+    private String description;
+
+    @Column(name = "sale_price")
+    private Double salePrice;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "producer_id")
     private Producer producerId;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "sale_id")
+    private Sale saleId;
 
     @JsonIgnore
     @OneToMany(mappedBy = "productId")
@@ -44,11 +54,14 @@ public class Product {
     public Product() {
     }
 
-    public Product(String nameProduct, Double price, Integer count, Producer producerId) {
+    public Product(String nameProduct, Double price, Integer count, String description, Double salePrice, Producer producerId, Sale saleId) {
         this.nameProduct = nameProduct;
         this.price = price;
         this.count = count;
+        this.description = description;
+        this.salePrice = salePrice;
         this.producerId = producerId;
+        this.saleId = saleId;
     }
 
     @Override
@@ -58,6 +71,8 @@ public class Product {
                 ", nameProduct='" + nameProduct + '\'' +
                 ", price=" + price +
                 ", count=" + count +
+                ", description='" + description + '\'' +
+                ", salePrice=" + salePrice +
                 ", producerId=" + producerId +
                 '}';
     }

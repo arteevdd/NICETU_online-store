@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import test.project.onlineshop.dto.ProductListDto;
 import test.project.onlineshop.dto.ProductRequestDto;
 import test.project.onlineshop.entity.Product;
 import test.project.onlineshop.exception.ProductNotFoundException;
@@ -15,6 +16,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:8081")
 @RequestMapping("/online-shop")
 public class ProductController {
 
@@ -26,9 +28,9 @@ public class ProductController {
     }
 
     @GetMapping("/products/{productId}")
-    public ResponseEntity<Product> findProductByProductId(@PathVariable("productId") Integer productId){
+    public ResponseEntity<ProductListDto> findProductListDtoByProductId(@PathVariable("productId") Integer productId){
         try {
-            return new ResponseEntity<>(productService.findProductByProductId(productId), HttpStatus.OK);
+            return new ResponseEntity<>(productService.findProductListDtoByProductId(productId), HttpStatus.OK);
         }catch (ProductNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

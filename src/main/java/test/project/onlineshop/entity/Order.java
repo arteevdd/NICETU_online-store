@@ -35,7 +35,9 @@ public class Order {
     public Order() {
     }
 
-    public Order(Integer quantity, Double price) {
+    public Order(Product productId, Cart cartId,Integer quantity, Double price) {
+        this.productId = productId;
+        this.cartId = cartId;
         this.quantity = quantity;
         this.price = price;
     }
