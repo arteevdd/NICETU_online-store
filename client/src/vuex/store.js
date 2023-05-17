@@ -11,7 +11,7 @@ const store = createStore({
     },
     mutations: {
         SET_PRODUCTS_TO_STATE: (state, products) => {
-            state.products = products;
+            state.products = products.sort((prod1, prod2) => prod1['price'] > prod2['price'] ? 1 : -1);
         },
         SET_CATEGORIES_TO_STATE: (state, categories) => {
             state.categories = categories
