@@ -1,0 +1,25 @@
+version: '2.1'
+
+services:
+  postgres:
+    image: postgres:14.7
+    container_name: store_db
+    hostname: store_db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: qwerty
+      POSTGRES_DB: postgres
+      POSTGRES_SCHEMA: public
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: echo "hello"
+
+  backend:
+    build: .
+    container_name: backend
+    depends_on:
+      postgres:
+        condition: service_healthy
+    ports:
+      - "8080:8080"

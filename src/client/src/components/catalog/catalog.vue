@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import vCatalogItem from './catalog-item'
+import vCatalogItem from './catalog-item.vue'
 import vBreadcrums from './v-breadcrums.vue'
 import { mapActions, mapGetters } from 'vuex'
 
