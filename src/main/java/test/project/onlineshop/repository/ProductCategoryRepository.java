@@ -16,7 +16,7 @@ public interface ProductCategoryRepository extends CrudRepository<ProductCategor
 
     Iterable<ProductCategory> findAll();
 
-    @Query("SELECT new test.project.onlineshop.dto.ProductListDto(p.productId, p.nameProduct, p.price, p.count, p.description, p.salePrice, p.producerId.nameProducer) FROM ProductCategory pc " +
+    @Query("SELECT new test.project.onlineshop.dto.ProductListDto(p.productId, p.nameProduct, p.price, p.count, p.description, p.salePrice, p.producerId.nameProducer, p.road) FROM ProductCategory pc " +
             "JOIN Category cat ON pc.categoryId = cat " +
             "JOIN Product p ON pc.productId = p " +
             "WHERE cat.categoryId = :categoryId")

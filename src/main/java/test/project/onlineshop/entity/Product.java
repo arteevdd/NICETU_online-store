@@ -35,6 +35,9 @@ public class Product {
     @Column(name = "sale_price")
     private Double salePrice;
 
+    @Column(name = "road")
+    private String road;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "producer_id")
     private Producer producerId;
