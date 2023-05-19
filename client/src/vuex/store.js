@@ -11,7 +11,8 @@ const store = createStore({
     },
     mutations: {
         SET_PRODUCTS_TO_STATE: (state, products) => {
-            state.products = products;
+            state.products = products.sort((prod1, prod2) => prod1['price'] > prod2['price'] ? 1 : -1); //если не авторизован
+            //добавить фильтр по новой цене
         },
         SET_CATEGORIES_TO_STATE: (state, categories) => {
             state.categories = categories
@@ -71,7 +72,6 @@ const store = createStore({
             try {
                 const products = await axios('http://localhost:3000/products', {
                     method: "GET"
-                    
                 });
                 commit('SET_PRODUCTS_TO_STATE', products.data);
                 return products;

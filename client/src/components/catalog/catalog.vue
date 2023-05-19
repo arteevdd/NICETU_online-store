@@ -4,8 +4,8 @@
             <vBreadcrums/>
         </div>
         <div class="filter">
-            <span class="filter_value" v-if="isDefault" @click="isDefault = !isDefault">Сначала дешевле</span>
-            <span class="filter_value" v-else @click="isDefault = !isDefault">Сначала дороже</span>
+            <span class="filter_value" v-if="isDefault" @click="isDefault = !isDefault; this.PRODUCTS.reverse();">Сначала дороже</span>
+            <span class="filter_value" v-else @click="isDefault = !isDefault; this.PRODUCTS.reverse();">Сначала дешевле</span>
         </div>
         <div class="catalog_items">
             <v-catalog-item
@@ -57,7 +57,8 @@ export default {
     display: flex;
     justify-content: flex-end;
     min-width: 800px;
-    margin-right: 150px;
+    margin-right: 50px;
+    margin-bottom: 10px;
     &_value{
         cursor: pointer;
         &:hover{
@@ -66,7 +67,7 @@ export default {
     }
 }
 .catalog_top {
-    margin-bottom: 30px;
+    margin-bottom: 10px;
 }
 .catalog_items {
     border-top: 1px solid lightgray;
