@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<Order> addNewOrders(List<OrderDto> orderDto) {
 //        TODO: переписать на автоматическое определение
-        String emailBuyer = "arteev.dd@gmail.com";
+        String emailBuyer = "halaevaanna@gmail.com";
         StringBuilder stringBuilder = new StringBuilder();
         Optional<Cart> cart = cartRepository.findCartByCartId(4);
         List<Product> products = new ArrayList<>();
@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService{
             for (OrderDto order : orderDto) {
                 Product currentProduct = productRepository.findProductByProductId(order.getProductId()).get();
                 stringBuilder.append(count++ + ") " + currentProduct.getNameProduct() + " количество: " + order.getQuantity() +" цена: " + currentProduct.getPrice() + "\n");
-                totalPrice += currentProduct.getPrice();
+                totalPrice += currentProduct.getPrice() * order.getQuantity();
                 products.add(productRepository.findProductByProductId(order.getProductId()).get());
                 Integer quantity = order.getQuantity();
                 orderRepository.save(

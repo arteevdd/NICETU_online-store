@@ -1,8 +1,8 @@
 <template>
     <div class="cart_item">
-            <img class="cart_item__img" :src="require('../../assets/img/' + cart_data_item.img)" alt="img">
+            <img class="cart_item__img" :src="require(`../../../public/images/${cart_data_item.road}`)" alt="img">
             <div class="cart_item_about">
-                <h2>{{ cart_data_item.category }} {{ cart_data_item.name }}</h2>
+                <h2>{{ cart_data_item.nameProduct }}</h2>
             </div>
             <div class="cart_item_right">
                 <div class="cart_item_right__quantity">
@@ -20,7 +20,7 @@
                     >Delete</button>
             </div>
             <div class="cart_item__price">
-                <p>{{ cart_data_item.price }}</p>
+                <p>{{ cart_data_item.salePrice }}</p>
             </div>
     </div>
 </template>
