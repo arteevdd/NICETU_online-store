@@ -1,6 +1,6 @@
 <template>
     <div class="catalog_item">
-    <img class="catalog_item__img" :src="require('../../../public/images/' + prod.road)" alt="img">
+    <img class="catalog_item__img" :src="require(`../../../public/images/${prod.road}`)" alt="img">
         <div class="catalog_item_about">
             <p> {{ prod.nameProduct }}</p>
             <p>{{ prod.description }}</p>

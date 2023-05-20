@@ -25,7 +25,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Vtree from './v-tree.vue';
-import axios from 'axios';
 
 export default {
     name: 'v-catalog-list',
@@ -45,7 +44,7 @@ export default {
         ...mapActions([
             'SET_BRDCRMS',
             'CLEAR_BRDCRMS',
-            'SET_PRODUCTS_TO_STATE'
+            'GET_PRODUCTS_BY_CATEGORY'
         ]),
         drawTree() {
             this.tree = this.formTree(this.CATEGORIES)
@@ -83,8 +82,12 @@ export default {
         setBrdcrm(catName) {
             this.CLEAR_BRDCRMS()
             let brdcrm = this.CATEGORIES.find(el => el.nameCategory === catName)
-            const products = axios.get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
-            this.SET_PRODUCTS_TO_STATE(products.data)
+            console.log(brdcrm.categoryId)
+            this.GET_PRODUCTS_BY_CATEGORY(brdcrm.categoryId)
+            // const products = axios
+            // .get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
+            // .then(response => response.data);
+            // axios.get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
             while (brdcrm.parentCategoryId) {
                 this.SET_BRDCRMS(brdcrm.nameCategory)
                 brdcrm = this.CATEGORIES.find(el => el.categoryId === brdcrm.parentCategoryId)
