@@ -25,7 +25,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Vtree from './v-tree.vue';
-import axios from 'axios';
 
 export default {
     name: 'v-catalog-list',

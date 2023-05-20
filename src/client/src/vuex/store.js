@@ -82,7 +82,7 @@ const store = createStore({
         },
         async GET_CATEGORIES_FROM_API({commit}) {
             try {
-                const categories = await axios('http://localhost:8080/online-shop/categories', {
+                const categories = await axios('http://localhost:8080/online-shop/categories', { 
                     method: "GET"
                 });
                 commit('SET_CATEGORIES_TO_STATE', categories.data);

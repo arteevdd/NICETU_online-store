@@ -9,6 +9,7 @@ VALUES (10), (20), (50);
 INSERT INTO "user"(first_name, second_name, email, password)
 VALUES ('Danil', 'Arteev', 'arteic4@yandex.ru', 'qwerty'),
        ('Anna', 'Khalaeva', 'khalaeva@gmail.com', 'ytrewq');
+
 INSERT INTO "product" (producer_id, name_product, price, count, sale_id, sale_price, description)
 VALUES (1, 'Смартфон Apple iPhone 14', 86990, 15, 1, 78291,
        'iPhone 14 - смартфон, который является одним из лучших в своем классе. Его основные преимущества - быстрый процессор, отличная камера и большой дисплей. Кроме того, этот телефон имеет долговечный аккумулятор и выдерживает пыль и воду.'),
@@ -26,6 +27,7 @@ VALUES (1, 'Смартфон Apple iPhone 14', 86990, 15, 1, 78291,
         'Чехол'),
        (4, 'Умная колонка Яндекс Станция', 12590, 55, 1, 11331,
        'Колонка');
+
 INSERT INTO cart (user_id)
 VALUES (1), (2), (1), (2);
 
