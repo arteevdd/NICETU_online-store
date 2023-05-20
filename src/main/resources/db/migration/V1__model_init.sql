@@ -30,6 +30,7 @@ CREATE TABLE "product" (
     sale_price DECIMAL(8, 2),
     count INTEGER,
     description VARCHAR(300),
+    road VARCHAR(255) NULL,
     sale_id INTEGER,
     producer_id INTEGER NOT NULL,
     CONSTRAINT fk_product_producer FOREIGN KEY (producer_id) REFERENCES producer(producer_id),

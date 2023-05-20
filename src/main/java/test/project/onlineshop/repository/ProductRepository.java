@@ -17,7 +17,7 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     Optional<Product> findProductByProductId(Integer productId);
 
 
-    @Query("SELECT new test.project.onlineshop.dto.ProductListDto(p.productId, p.nameProduct, p.price, p.count, p.description, p.salePrice, pr.nameProducer) FROM Product p " +
+    @Query("SELECT new test.project.onlineshop.dto.ProductListDto(p.productId, p.nameProduct, p.price, p.count, p.description, p.salePrice, pr.nameProducer, p.road) FROM Product p " +
             "JOIN Producer pr ON p.producerId = pr " +
             "WHERE p.productId = :productId")
     Optional<ProductListDto> findProductListDtoByProductId(@Param("productId") Integer productId);

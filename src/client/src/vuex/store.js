@@ -11,7 +11,8 @@ const store = createStore({
     },
     mutations: {
         SET_PRODUCTS_TO_STATE: (state, products) => {
-            state.products = products;
+            state.products = products.sort((prod1, prod2) => prod1['price'] > prod2['price'] ? 1 : -1); //если не авторизован
+            //добавить фильтр по новой цене
         },
         SET_CATEGORIES_TO_STATE: (state, categories) => {
             state.categories = categories
@@ -69,9 +70,8 @@ const store = createStore({
     actions: {
         async GET_PRODUCTS_FROM_API({commit}) {
             try {
-                const products = await axios('http://localhost:3000/products', {
+                const products = await axios('http://localhost:8080/online-shop/products', {
                     method: "GET"
-                    
                 });
                 commit('SET_PRODUCTS_TO_STATE', products.data);
                 return products;
@@ -82,7 +82,7 @@ const store = createStore({
         },
         async GET_CATEGORIES_FROM_API({commit}) {
             try {
-                const categories = await axios('http://localhost:3000/categories', {
+                const categories = await axios('http://localhost:8080/online-shop/categories', { 
                     method: "GET"
                 });
                 commit('SET_CATEGORIES_TO_STATE', categories.data);

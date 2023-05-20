@@ -25,7 +25,9 @@ public class ProductListDto {
 
     private String nameProducer;
 
-    public ProductListDto(Integer productId, String nameProduct, Double price, Integer count, String description, Double salePrice, String nameProducer) {
+    private String road;
+
+    public ProductListDto(Integer productId, String nameProduct, Double price, Integer count, String description, Double salePrice, String nameProducer, String road) {
         this.productId = productId;
         this.nameProduct = nameProduct;
         this.price = price;
@@ -33,5 +35,6 @@ public class ProductListDto {
         this.description = description;
         this.salePrice = salePrice;
         this.nameProducer = nameProducer;
+        this.road = road;
     }
 }
