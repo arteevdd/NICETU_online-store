@@ -48,7 +48,7 @@ public class OrderServiceImpl implements OrderService{
     @Override
     public List<Order> addNewOrders(List<OrderDto> orderDto) {
 //        TODO: переписать на автоматическое определение
-        String emailBuyer = "arteev.dd@gmail.com";
+        String emailBuyer = "halaevaanna@gmail.com";
         StringBuilder stringBuilder = new StringBuilder();
         Optional<Cart> cart = cartRepository.findCartByCartId(4);
         List<Product> products = new ArrayList<>();

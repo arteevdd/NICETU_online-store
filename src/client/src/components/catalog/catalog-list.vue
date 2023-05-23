@@ -12,7 +12,7 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li v-for="category in tree[0]" :key="category">
                 <RouterLink style="text-decoration: none" :to="{ name: 'type', params: { type: category.categoryId}}">
-                    <h4 @click="setBrdcrm(category.nameCategory)" class="dropdown-item">{{ category.nameCategory }}</h4>
+                    <h4 @click="setBrdcrm(category)" class="dropdown-item">{{ category.nameCategory }}</h4>
                 </RouterLink>
                 <Vtree 
                     :tree="tree"
@@ -25,7 +25,6 @@
 <script>
 import { mapActions, mapGetters } from 'vuex';
 import Vtree from './v-tree.vue';
-import axios from 'axios';
 
 export default {
     name: 'v-catalog-list',
@@ -45,7 +44,7 @@ export default {
         ...mapActions([
             'SET_BRDCRMS',
             'CLEAR_BRDCRMS',
-            'SET_PRODUCTS_TO_STATE'
+            'GET_PRODUCTS_BY_CATEGORY'
         ]),
         drawTree() {
             this.tree = this.formTree(this.CATEGORIES)
@@ -80,11 +79,16 @@ export default {
             }
             return tree
         },
-        setBrdcrm(catName) {
+        setBrdcrm(cat) {
             this.CLEAR_BRDCRMS()
-            let brdcrm = this.CATEGORIES.find(el => el.nameCategory === catName)
-            const products = axios.get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
-            this.SET_PRODUCTS_TO_STATE(products.data)
+            console.log(cat)
+            let brdcrm = this.CATEGORIES.find(el => el.categoryId === cat.categoryId)
+            console.log(brdcrm.categoryId)
+            this.GET_PRODUCTS_BY_CATEGORY(brdcrm.categoryId)
+            // const products = axios
+            // .get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
+            // .then(response => response.data);
+            // axios.get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
             while (brdcrm.parentCategoryId) {
                 this.SET_BRDCRMS(brdcrm.nameCategory)
                 brdcrm = this.CATEGORIES.find(el => el.categoryId === brdcrm.parentCategoryId)

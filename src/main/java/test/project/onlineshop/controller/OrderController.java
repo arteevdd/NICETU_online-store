@@ -14,6 +14,7 @@ import test.project.onlineshop.service.order.OrderService;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:8081")
 @RequestMapping("/online-shop")
 public class OrderController {
 

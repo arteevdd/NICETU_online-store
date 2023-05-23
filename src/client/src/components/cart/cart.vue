@@ -12,7 +12,7 @@
         <div class="cart_total">
             <h5 style="margin-bottom: 20px">Your order</h5>
             <p style="font-size: 17px; margin-bottom: 5px">Количество товаров: {{ CART.reduce((a, b) => a + b.quantity, 0) }}</p>
-            <p style="font-size: 17px;">Итого: {{ CART.reduce((a, b) => a + b.quantity * b.price, 0) }}$</p>
+            <p style="font-size: 17px;">Итого: {{ CART.reduce((a, b) => a + b.quantity * b.salePrice, 0) }}$</p>
             <button class="btn btn-primary" @click="Buy">Оформить заказ</button>
         </div>
     </div>
@@ -58,7 +58,7 @@ export default {
                 cart.push(pro)
                 console.log(cart)
             }
-            axios.post('http://localhost:3000/buy', cart)
+            axios.post('http://localhost:8080/online-shop/orders', cart)
         }
     }
 }
