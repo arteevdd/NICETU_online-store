@@ -23,3 +23,11 @@ services:
         condition: service_healthy
     ports:
       - "8080:8080"
+  
+  frontend: 
+    build: ./src/client
+    restart: always
+    ports:
+      - 8081:8081
+    depends_on:
+      - backend
