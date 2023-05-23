@@ -58,7 +58,7 @@ public class OrderServiceImpl implements OrderService{
             for (OrderDto order : orderDto) {
                 Product currentProduct = productRepository.findProductByProductId(order.getProductId()).get();
                 stringBuilder.append(count++ + ") " + currentProduct.getNameProduct() + " количество: " + order.getQuantity() +" цена: " + currentProduct.getPrice() + "\n");
-                totalPrice += currentProduct.getPrice();
+                totalPrice += currentProduct.getPrice() * order.getQuantity();
                 products.add(productRepository.findProductByProductId(order.getProductId()).get());
                 Integer quantity = order.getQuantity();
                 orderRepository.save(
