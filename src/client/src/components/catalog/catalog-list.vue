@@ -12,7 +12,7 @@
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
             <li v-for="category in tree[0]" :key="category">
                 <RouterLink style="text-decoration: none" :to="{ name: 'type', params: { type: category.categoryId}}">
-                    <h4 @click="setBrdcrm(category.nameCategory)" class="dropdown-item">{{ category.nameCategory }}</h4>
+                    <h4 @click="setBrdcrm(category)" class="dropdown-item">{{ category.nameCategory }}</h4>
                 </RouterLink>
                 <Vtree 
                     :tree="tree"
@@ -79,9 +79,10 @@ export default {
             }
             return tree
         },
-        setBrdcrm(catName) {
+        setBrdcrm(cat) {
             this.CLEAR_BRDCRMS()
-            let brdcrm = this.CATEGORIES.find(el => el.nameCategory === catName)
+            console.log(cat)
+            let brdcrm = this.CATEGORIES.find(el => el.categoryId === cat.categoryId)
             console.log(brdcrm.categoryId)
             this.GET_PRODUCTS_BY_CATEGORY(brdcrm.categoryId)
             // const products = axios
