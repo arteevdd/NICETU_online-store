@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:8081")
-@RequestMapping("/online-shop")
+@RequestMapping("/product_category")
 public class ProductCategoryController {
 
     private final ProductCategoryService productCategoryService;
@@ -23,7 +23,7 @@ public class ProductCategoryController {
         this.productCategoryService = productCategoryService;
     }
 
-    @GetMapping("/product_category/{categoryId}")
+    @GetMapping("/{categoryId}")
     public ResponseEntity<List<ProductListDto>> relationshipsBetweenCategoryAndProduct(@PathVariable("categoryId") Integer categoryId){
         try {
             return new ResponseEntity<>(productCategoryService.findProductCategoriesByCategoryId(categoryId), HttpStatus.OK);

@@ -1,5 +1,6 @@
 package test.project.onlineshop.service.jms;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.mail.SimpleMailMessage;
@@ -15,6 +16,7 @@ public class EmailSenderServiceImpl implements EmailSenderService{
     @Value("${spring.mail.username}")
     private String father;
 
+    @Autowired
     public EmailSenderServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }

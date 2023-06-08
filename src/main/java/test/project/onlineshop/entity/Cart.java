@@ -31,8 +31,7 @@ public class Cart {
     public Cart() {
     }
 
-    public Cart(Integer cartId, User userId) {
-        this.cartId = cartId;
+    public Cart(User userId) {
         this.userId = userId;
     }
 

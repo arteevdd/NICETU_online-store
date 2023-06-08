@@ -8,12 +8,19 @@ CREATE TABLE sale (
     sale_percent INTEGER NOT NULL
 );
 
+CREATE TABLE role (
+    role_id SERIAL PRIMARY KEY NOT NULL,
+    role_name VARCHAR(50) NOT NULL
+);
+
 CREATE TABLE "user" (
     user_id SERIAL PRIMARY KEY NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     second_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) UNIQUE NOT NULL,
-    password VARCHAR(100) NOT NULL
+    password VARCHAR(100) NOT NULL,
+    role_id INTEGER NOT NULL,
+    CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES "role"(role_id)
 );
 
 -- Добавить поле TIMESTAMP
@@ -22,7 +29,7 @@ CREATE TABLE cart (
     user_id INTEGER NOT NULL,
     CONSTRAINT fk_cart_user FOREIGN KEY (user_id) REFERENCES "user"(user_id)
 );
--- IMage ??????
+
 CREATE TABLE "product" (
     product_id SERIAL PRIMARY KEY NOT NULL,
     name_product varchar(255) UNIQUE NOT NULL,

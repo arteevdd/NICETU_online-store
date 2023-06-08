@@ -1,18 +1,13 @@
 package test.project.onlineshop.service.user;
 
-import test.project.onlineshop.entity.User;
+import test.project.onlineshop.dto.AuthRequest;
+import test.project.onlineshop.dto.UserRequest;
 
-import java.util.List;
+import java.util.Map;
 
 public interface UserService {
 
-    User findUserByUserId(Integer userId);
+    Map<String, String> registration(UserRequest user);
 
-    List<User> findAll();
-
-    User addNewUser(User user);
-
-    void updateEmail(Integer userId, String email);
-
-    void deleteUserByUserId(Integer userId);
+    Map<String, String> login(AuthRequest authRequest);
 }

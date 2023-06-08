@@ -16,7 +16,6 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     Optional<Product> findProductByProductId(Integer productId);
 
-
     @Query("SELECT new test.project.onlineshop.dto.ProductListDto(p.productId, p.nameProduct, p.price, p.count, p.description, p.salePrice, pr.nameProducer, p.road) FROM Product p " +
             "JOIN Producer pr ON p.producerId = pr " +
             "WHERE p.productId = :productId")
@@ -24,24 +23,10 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     Iterable<Product> findAll();
 
-
-    @Transactional
-    @Modifying
-    @Query("UPDATE Product p " +
-            "SET p.nameProduct = :nameProduct, p.price = :price, p.count = :count " +
-            "WHERE p.productId = :productId")
-    void updateProductByProductId(@Param("productId") Integer productId,
-                                  @Param("nameProduct") String nameProduct,
-                                  @Param("price") Double price,
-                                  @Param("count") Integer count);
-
     @Transactional
     @Modifying
     @Query("UPDATE Product p " +
             "SET p.count = :count WHERE p.productId = :productId")
     void updateProductCountByProductId(@Param("productId") Integer productId,
                                        @Param("count") Integer count);
-
-    @Transactional
-    void deleteProductByProductId(Integer productId);
 }
