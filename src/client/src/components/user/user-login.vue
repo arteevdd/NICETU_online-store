@@ -1,6 +1,6 @@
 <template>
 <div class="user_login" >
-    <form action="">
+    <form>
         <h4 class="user_login__i">Log in</h4>
         <div class="user_login__i form-group">
           <label for="exampleInputEmail1">Email address</label>
@@ -11,7 +11,7 @@
           <label for="exampleInputPassword1">Password</label>
           <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
-        <button type="button" @click="addUser(email)" class="btn btn-primary" style="margin-bottom: 10px">Log In</button>
+        <button type="button" @click="addUser()" class="btn btn-primary" style="margin-bottom: 10px">Log In</button>
         <br>
         <RouterLink to="/regist">Registration</RouterLink>
     </form>
@@ -19,23 +19,22 @@
 </template>
 
 <script>
-import router from '@/router';
 import { mapActions } from 'vuex';
 
 export default {
     name: 'v-user-login',
     data() {
         return {
-            email: ''
+            email: '',
+            pass: '',
         }
     },
     methods: {
         ...mapActions ([
             'ADD_EMAIL'
         ]),
-        addUser(email) {
-            this.ADD_EMAIL(email);
-            router.push({name: 'home'})
+        addUser() {
+            this.ADD_EMAIL(this.email, this.pass);
         }
     }
 }
