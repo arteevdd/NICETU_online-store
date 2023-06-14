@@ -105,36 +105,6 @@ const store = createStore({
                 return e;
             }
         },
-        async ADD_EMAIL () {
-            try {
-                const testId = await axios('http://localhost:8080/online-store/v1/test', {
-                    data: 3,
-                    method: "POST"
-                });
-                return testId;
-            } catch (e) {
-                console.log(e);
-                return e;
-            }
-            // try {
-            //     let res = await fetch( `http://localhost:8080/online-store/v1/login`, {
-            //         method: 'POST',
-            //         headers: {
-            //             'Content-Type': 'application/json'
-            //         },
-            //         body: formBody
-            //     })
-            //     if (res.ok) {
-            //         console.log('Авторизация прошла успешно')
-            //         commit('SET_EMAIL', email)
-            //     } else {
-            //         alert("Неверный юзер: " + res.status);
-            //         console.log('Авторизация не прошла')
-            //     }
-            // } catch (error) {
-            //     console.error(error)
-            // }
-        },
         ADD_TO_CART({commit}, product) {
             commit('SET_CART', product);
         },
