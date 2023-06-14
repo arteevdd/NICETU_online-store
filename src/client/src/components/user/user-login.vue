@@ -1,7 +1,7 @@
 <template>
 <div class="user_login" >
     <form>
-        <h4 class="user_login__i">Log in</h4>
+        <h4 class="user_login__i">ВХОД</h4>
         <div class="user_login__i form-group">
           <label for="exampleInputEmail1">Email address</label>
           <input  v-model="email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
