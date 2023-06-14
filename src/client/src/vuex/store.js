@@ -71,7 +71,7 @@ const store = createStore({
     actions: {
         async GET_PRODUCTS_FROM_API({commit}) {
             try {
-                const products = await axios('http://localhost:8080/online-shop/products', {
+                const products = await axios('http://localhost:8080/online-store/v1/products', {
                     method: "GET"
                 });
                 commit('SET_PRODUCTS_TO_STATE', products.data);
@@ -83,7 +83,7 @@ const store = createStore({
         },
         async GET_PRODUCTS_BY_CATEGORY({commit}, categoryId) {
             try {
-                const products = await axios(`http://localhost:8080/online-shop/product_category/${categoryId}`, {
+                const products = await axios(`http://localhost:8080/online-store/v1/product_category/${categoryId}`, {
                     method: "GET"
                 });
                 commit('SET_PRODUCTS_TO_STATE', products.data);
@@ -95,7 +95,7 @@ const store = createStore({
         },
         async GET_CATEGORIES_FROM_API({commit}) {
             try {
-                const categories = await axios('http://localhost:8080/online-shop/categories', { 
+                const categories = await axios('http://localhost:8080/online-store/v1/categories', {
                     method: "GET"
                 });
                 commit('SET_CATEGORIES_TO_STATE', categories.data);
@@ -105,8 +105,35 @@ const store = createStore({
                 return e;
             }
         },
-        ADD_EMAIL ({commit}, email) {
-            commit('SET_EMAIL', email)
+        async ADD_EMAIL () {
+            try {
+                const testId = await axios('http://localhost:8080/online-store/v1/test', {
+                    data: 3,
+                    method: "POST"
+                });
+                return testId;
+            } catch (e) {
+                console.log(e);
+                return e;
+            }
+            // try {
+            //     let res = await fetch( `http://localhost:8080/online-store/v1/login`, {
+            //         method: 'POST',
+            //         headers: {
+            //             'Content-Type': 'application/json'
+            //         },
+            //         body: formBody
+            //     })
+            //     if (res.ok) {
+            //         console.log('Авторизация прошла успешно')
+            //         commit('SET_EMAIL', email)
+            //     } else {
+            //         alert("Неверный юзер: " + res.status);
+            //         console.log('Авторизация не прошла')
+            //     }
+            // } catch (error) {
+            //     console.error(error)
+            // }
         },
         ADD_TO_CART({commit}, product) {
             commit('SET_CART', product);

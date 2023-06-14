@@ -1,14 +1,8 @@
 package test.project.onlineshop.dto;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Builder;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@ToString
+@Builder
 public class ProductListDto {
 
     private Integer productId;

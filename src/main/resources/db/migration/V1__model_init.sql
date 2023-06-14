@@ -10,7 +10,7 @@ CREATE TABLE sale (
 
 CREATE TABLE role (
     role_id SERIAL PRIMARY KEY NOT NULL,
-    role_name VARCHAR(50) NOT NULL
+    role_name VARCHAR(50) UNIQUE NOT NULL
 );
 
 CREATE TABLE "user" (
@@ -33,12 +33,12 @@ CREATE TABLE cart (
 CREATE TABLE "product" (
     product_id SERIAL PRIMARY KEY NOT NULL,
     name_product varchar(255) UNIQUE NOT NULL,
-    price DECIMAL(8, 2),
-    sale_price DECIMAL(8, 2),
+    price DECIMAL(8, 2) NOT NULL ,
+    sale_price DECIMAL(8, 2) NOT NULL ,
     count INTEGER,
-    description VARCHAR(300),
-    road VARCHAR(255) NULL,
-    sale_id INTEGER,
+    description VARCHAR(300) NOT NULL,
+    road VARCHAR(255) NOT NULL,
+    sale_id INTEGER NOT NULL,
     producer_id INTEGER NOT NULL,
     CONSTRAINT fk_product_producer FOREIGN KEY (producer_id) REFERENCES producer(producer_id),
     CONSTRAINT fk_product_sale FOREIGN KEY (sale_id) REFERENCES sale(sale_id)
