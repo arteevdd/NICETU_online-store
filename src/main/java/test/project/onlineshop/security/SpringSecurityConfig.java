@@ -5,6 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -35,14 +36,14 @@ public class SpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/login", "/signup").permitAll()
-                .antMatchers(HttpMethod.POST, "/test").permitAll()
-                .antMatchers(HttpMethod.GET,"/products/**").permitAll()
-                .antMatchers(HttpMethod.GET, "/product_category/").permitAll()
-                .antMatchers(HttpMethod.GET, "/categories").permitAll()
-                .antMatchers(HttpMethod.POST, "/orders").hasRole("USER")
-                .anyRequest().authenticated()
+                    .antMatchers(HttpMethod.POST, "/login", "/signup").permitAll()
+                    .antMatchers(HttpMethod.GET,"/products/**").permitAll()
+                    .antMatchers(HttpMethod.GET, "/product_category/").permitAll()
+                    .antMatchers(HttpMethod.GET, "/categories").permitAll()
+                    .antMatchers(HttpMethod.POST, "/orders").hasRole("USER")
+                    .anyRequest().authenticated()
                 .and()
+                .cors(Customizer.withDefaults())
                 .apply(new JwtSecurityConfigurer(jwtTokenProvider));
     }
 }
