@@ -85,10 +85,6 @@ export default {
             let brdcrm = this.CATEGORIES.find(el => el.categoryId === cat.categoryId)
             console.log(brdcrm.categoryId)
             this.GET_PRODUCTS_BY_CATEGORY(brdcrm.categoryId)
-            // const products = axios
-            // .get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
-            // .then(response => response.data);
-            // axios.get(`http://localhost:8080/online-shop/product_category/${brdcrm.categoryId}`)
             while (brdcrm.parentCategoryId) {
                 this.SET_BRDCRMS(brdcrm.nameCategory)
                 brdcrm = this.CATEGORIES.find(el => el.categoryId === brdcrm.parentCategoryId)

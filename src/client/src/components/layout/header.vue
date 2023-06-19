@@ -4,13 +4,13 @@
         <catalogList/>
     </div>
     <div class="header_right">
-        <RouterLink v-if="!EMAIL" to="/login">
+        <RouterLink v-if="Object.keys(USER).length === 0" to="/login">
             <div class="header_right_user">
                 Войти
             </div>
         </RouterLink>
         <div v-else>
-            {{ EMAIL }}
+            {{ USER.firstName }}
             <button @click="exit" class="btn btn-link">Выйти</button>
         </div>
         <RouterLink to="/cart">
@@ -36,15 +36,15 @@ export default {
     computed: {
         ...mapGetters([
             'CART',
-            'EMAIL'
+            'USER'
         ])
     },
     methods: {
         ...mapActions ([
-            'ADD_EMAIL',
+            'EXIT',
         ]),
         exit() {
-            this.ADD_EMAIL('');
+            this.EXIT('');
             router.push({name: 'home'})
         }
     }

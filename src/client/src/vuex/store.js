@@ -7,7 +7,8 @@ const store = createStore({
         categories: [],
         products: [],
         cart: [],
-        brdcrms: ['Главная']
+        brdcrms: ['Главная'],
+        user: {}
     },
     mutations: {
         SET_PRODUCTS_TO_STATE: (state, products) => {
@@ -42,8 +43,9 @@ const store = createStore({
             }
             else { return 0 }
         },
-        SET_EMAIL: (state, email) => {
-            state.email = email
+        SET_USER: (state, user) => {
+            state.user = user
+            console.log(state.user)
         },
         DELETE_PROD: (state, index) => {
             state.cart.splice(index, 1)
@@ -66,6 +68,9 @@ const store = createStore({
         },
         CLEAR_BRDCRMS: (state) => {
             state.brdcrms = []
+        },
+        EXIT: (state) => {
+            state.user = {}
         }
     },
     actions: {
@@ -105,6 +110,26 @@ const store = createStore({
                 return e;
             }
         },
+        async SET_USER({commit}, body) {
+            try {
+                const user = await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/online-store/v1/login',
+                    data: {
+                        email: body.email, 
+                        password: body.password
+                    },
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                    });
+                commit('SET_USER', user.data);
+                return user.data;
+            } catch (e) {
+                console.log(e);
+                return 0;
+            }
+        },
         ADD_TO_CART({commit}, product) {
             commit('SET_CART', product);
         },
@@ -125,6 +150,9 @@ const store = createStore({
         },
         SET_PRODUCTS_TO_STATE({commit}, products) {
             commit('SET_PRODUCTS_TO_STATE', products)
+        },
+        EXIT({commit}) {
+            commit('EXIT')
         }
     },
     getters: {
@@ -142,6 +170,9 @@ const store = createStore({
         },
         BRDCRMS(state) {
             return state.brdcrms;
+        },
+        USER(state) {
+            return state.user;
         }
     }
 });
