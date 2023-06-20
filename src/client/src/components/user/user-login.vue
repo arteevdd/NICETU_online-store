@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
-
+import axios from 'axios';
+import { mapActions } from 'vuex';
 export default {
     name: 'v-user-login',
     data() {
@@ -31,23 +31,29 @@ export default {
             }
         } 
     },
-    computed: {
-        ...mapGetters([
-            'USER'
-        ])
-    },
     methods: {
         ...mapActions([
-            'SET_USER'
+            'INSTALL_CART'
         ]),
         async addUser() {
-          let res = await this.SET_USER(this.user)
-          if (res) {
-            this.$router.push({name: 'home'})
-          }
-          else {
-            console.log('Вы не авторизовались!!')
-          }
+            try {
+                const user = await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/online-store/v1/login',
+                    data: {
+                        email: this.user.email, 
+                        password: this.user.password
+                    },
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                    });
+                this.$router.push({name: 'home'})
+                this.INSTALL_CART()
+                localStorage.user = JSON.stringify(user.data)
+            } catch (e) {
+                console.log('Вы не авторизовались!!')
+            }
         }
     }
 }

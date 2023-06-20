@@ -7,14 +7,12 @@ const store = createStore({
         categories: [],
         products: [],
         cart: [],
-        brdcrms: ['Главная'],
-        user: {}
+        brdcrms: ['Главная']
     },
     mutations: {
         SET_PRODUCTS_TO_STATE: (state, products) => {
             console.log(products)
-            state.products = products.sort((prod1, prod2) => prod1['price'] > prod2['price'] ? 1 : -1); //если не авторизован
-            //добавить фильтр по новой цене
+            state.products = products.sort((prod1, prod2) => prod1['price'] > prod2['price'] ? 1 : -1); 
         },
         SET_CATEGORIES_TO_STATE: (state, categories) => {
             state.categories = categories
@@ -43,10 +41,6 @@ const store = createStore({
             }
             else { return 0 }
         },
-        SET_USER: (state, user) => {
-            state.user = user
-            console.log(state.user)
-        },
         DELETE_PROD: (state, index) => {
             state.cart.splice(index, 1)
             console.log(state.cart)
@@ -69,8 +63,13 @@ const store = createStore({
         CLEAR_BRDCRMS: (state) => {
             state.brdcrms = []
         },
-        EXIT: (state) => {
-            state.user = {}
+        INSTALL_CART: (state) => {
+            if (localStorage.getItem('cart')) {
+                state.cart = JSON.parse(localStorage.getItem('cart'))
+            }
+        },
+        CLEAR_CART: (state) => {
+            state.cart = []
         }
     },
     actions: {
@@ -110,26 +109,6 @@ const store = createStore({
                 return e;
             }
         },
-        async SET_USER({commit}, body) {
-            try {
-                const user = await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/online-store/v1/login',
-                    data: {
-                        email: body.email, 
-                        password: body.password
-                    },
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                    });
-                commit('SET_USER', user.data);
-                return user.data;
-            } catch (e) {
-                console.log(e);
-                return 0;
-            }
-        },
         ADD_TO_CART({commit}, product) {
             commit('SET_CART', product);
         },
@@ -151,8 +130,11 @@ const store = createStore({
         SET_PRODUCTS_TO_STATE({commit}, products) {
             commit('SET_PRODUCTS_TO_STATE', products)
         },
-        EXIT({commit}) {
-            commit('EXIT')
+        INSTALL_CART({commit}, cart) {
+            commit('INSTALL_CART', cart)
+        },
+        CLEAR_CART({commit}, cart) {
+            commit('CLEAR_CART', cart)
         }
     },
     getters: {
@@ -170,9 +152,6 @@ const store = createStore({
         },
         BRDCRMS(state) {
             return state.brdcrms;
-        },
-        USER(state) {
-            return state.user;
         }
     }
 });
