@@ -11,8 +11,7 @@ const store = createStore({
     },
     mutations: {
         SET_PRODUCTS_TO_STATE: (state, products) => {
-            console.log(products)
-            state.products = products.sort((prod1, prod2) => prod1['price'] > prod2['price'] ? 1 : -1); 
+            state.products = products.sort((prod1, prod2) => prod1['price'] > prod2['price'] ? 1 : -1);
         },
         SET_CATEGORIES_TO_STATE: (state, categories) => {
             state.categories = categories
@@ -99,7 +98,7 @@ const store = createStore({
         },
         async GET_CATEGORIES_FROM_API({commit}) {
             try {
-                const categories = await axios('http://localhost:8080/online-store/v1/categories', {
+                const categories = await axios('http://localhost:8080/online-store/v1/categories', { 
                     method: "GET"
                 });
                 commit('SET_CATEGORIES_TO_STATE', categories.data);
