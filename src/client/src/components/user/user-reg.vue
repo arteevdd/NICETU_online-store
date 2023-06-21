@@ -5,7 +5,7 @@
             <div class="row user_reg__i">
                 <div class="col">
                   <label for="Name">Name</label>
-                  <input type="text" class="form-control" id="Name" v-model="user.firtsName">
+                  <input type="text" class="form-control" id="Name" v-model="user.firstName">
                 </div>
                 <div class="col">
                   <label for="Lastname">Lastame</label>
@@ -35,7 +35,7 @@ export default {
     data() {
         return {
             user: {
-                firtsName: '',
+                firstName: '',
                 secondName: '',
                 email: '', 
                 password: '',
@@ -49,7 +49,7 @@ export default {
                     method: 'post',
                     url: 'http://localhost:8080/online-store/v1/signup',
                     data: {
-                        firtsName: this.user.firtsName,
+                        firstName: this.user.firstName,
                         secondName: this.user.secondName,
                         email: this.user.email, 
                         password: this.user.password,
