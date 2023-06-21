@@ -1,15 +1,15 @@
 <template>
     <div class="user_reg">
-        <form @submit="addUserReg">
+        <form>
             <h4 class="user_reg__i">Registration</h4>
             <div class="row user_reg__i">
                 <div class="col">
                   <label for="Name">Name</label>
-                  <input type="text" class="form-control" id="Name" v-model="user.name">
+                  <input type="text" class="form-control" id="Name" v-model="user.firtsName">
                 </div>
                 <div class="col">
                   <label for="Lastname">Lastame</label>
-                  <input type="text" class="form-control" id="Lastname" v-model="user.lastname">
+                  <input type="text" class="form-control" id="Lastname" v-model="user.secondName">
                 </div>
             </div>
             <div class="user_reg__i form-group">
@@ -21,7 +21,7 @@
               <label for="exampleInputPassword1">Password</label>
               <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="user.password">
             </div>
-            <button type="submit" class="btn btn-primary" style="margin-bottom: 10px">Regist</button>
+            <button type="button" @click="Regist" class="btn btn-primary" style="margin-bottom: 10px">Regist</button>
             <br>
         </form>
     </div>
@@ -35,16 +35,34 @@ export default {
     data() {
         return {
             user: {
-                name: '',
-                lastname: '',
+                firtsName: '',
+                secondName: '',
                 email: '', 
                 password: '',
             }
         }
     },
     methods: {
-        addUserReg() {
-            axios.post('http://localhost:3000/online-shop/users', this.user)
+        async Regist() {
+            try {
+                const user = await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/online-store/v1/signup',
+                    data: {
+                        firtsName: this.user.firtsName,
+                        secondName: this.user.secondName,
+                        email: this.user.email, 
+                        password: this.user.password,
+                    },
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                    }
+                    });
+                console.log('Регистрация прошла успешно')
+                return user.data
+            } catch (e) {
+                console.log('Ошибка регистрации!!')
+            }
         }
     }
 

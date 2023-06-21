@@ -4,13 +4,13 @@
         <catalogList/>
     </div>
     <div class="header_right">
-        <RouterLink v-if="!EMAIL" to="/login">
+        <RouterLink v-if="Object.keys(user).length === 0" to="/login">
             <div class="header_right_user">
-                Войти
+                Войти 
             </div>
         </RouterLink>
         <div v-else>
-            {{ EMAIL }}
+            {{ user.firstName }}
             <button @click="exit" class="btn btn-link">Выйти</button>
         </div>
         <RouterLink to="/cart">
@@ -30,23 +30,36 @@ import router from '@/router';
 
 export default {
     name: 'v-header',
+    data() {
+        return {
+            user: {}
+        }
+    },
     components: {
         catalogList
     },
     computed: {
         ...mapGetters([
-            'CART',
-            'EMAIL'
+            'CART'
         ])
     },
     methods: {
-        ...mapActions ([
-            'ADD_EMAIL',
+        ...mapActions([
+            'CLEAR_CART'
         ]),
         exit() {
-            this.ADD_EMAIL('');
+            localStorage.removeItem('user')
+            localStorage.setItem('cart', JSON.stringify(this.CART))
+            this.user = {}
+            this.CLEAR_CART()
             router.push({name: 'home'})
         }
+    },
+    mounted(){
+        if (localStorage.getItem('user')) {
+            this.user = JSON.parse( localStorage.user )
+        }
+        console.log(this.user)
     }
 }
 </script>

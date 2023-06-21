@@ -40,9 +40,6 @@ const store = createStore({
             }
             else { return 0 }
         },
-        SET_EMAIL: (state, email) => {
-            state.email = email
-        },
         DELETE_PROD: (state, index) => {
             state.cart.splice(index, 1)
             console.log(state.cart)
@@ -64,6 +61,14 @@ const store = createStore({
         },
         CLEAR_BRDCRMS: (state) => {
             state.brdcrms = []
+        },
+        INSTALL_CART: (state) => {
+            if (localStorage.getItem('cart')) {
+                state.cart = JSON.parse(localStorage.getItem('cart'))
+            }
+        },
+        CLEAR_CART: (state) => {
+            state.cart = []
         }
     },
     actions: {
@@ -103,26 +108,6 @@ const store = createStore({
                 return e;
             }
         },
-        async ADD_EMAIL ({commit}, { em, pass }) {
-            try {
-                console.log(em, pass)
-                const {data} = await axios(`http://localhost:8080/online-store/v1/login`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded'
-                    },
-                    body: {
-                        email: em,
-                        password: pass
-                    }
-                });
-                commit('SET_EMAIL', data);
-                return data;
-            } catch (e) {
-                console.log(e); 
-                return e;
-            }
-        },
         ADD_TO_CART({commit}, product) {
             commit('SET_CART', product);
         },
@@ -143,6 +128,12 @@ const store = createStore({
         },
         SET_PRODUCTS_TO_STATE({commit}, products) {
             commit('SET_PRODUCTS_TO_STATE', products)
+        },
+        INSTALL_CART({commit}, cart) {
+            commit('INSTALL_CART', cart)
+        },
+        CLEAR_CART({commit}, cart) {
+            commit('CLEAR_CART', cart)
         }
     },
     getters: {
