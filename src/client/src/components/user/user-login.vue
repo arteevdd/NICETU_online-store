@@ -1,6 +1,6 @@
 <template>
 <div class="user_login" >
-    <form action="">
+    <form>
         <h4 class="user_login__i">Log in</h4>
         <div class="user_login__i form-group">
           <label for="exampleInputEmail1">Email address</label>
