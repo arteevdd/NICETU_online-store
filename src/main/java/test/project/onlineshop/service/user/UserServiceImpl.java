@@ -10,6 +10,8 @@ import test.project.onlineshop.dto.AuthRequest;
 import test.project.onlineshop.dto.UserRequest;
 import test.project.onlineshop.entity.Role;
 import test.project.onlineshop.entity.User;
+import test.project.onlineshop.exception.RoleNotFound;
+import test.project.onlineshop.exception.UserExistException;
 import test.project.onlineshop.exception.UserNotFoundException;
 import test.project.onlineshop.repository.RoleRepository;
 import test.project.onlineshop.repository.UserRepository;
@@ -50,29 +52,33 @@ public class UserServiceImpl implements UserService {
         if (user.getEmail().matches(emailPattern)){
             Optional<User> tempUser = userRepository.findUserByEmail(user.getEmail());
             Optional<Role> userRole = roleRepository.findRoleByRoleName("ROLE_USER");
-            if (!tempUser.isPresent() && !userRole.isPresent()){
-                throw new RuntimeException("User email: " + user.getEmail() + " exist!");
+            if (tempUser.isPresent()){
+                throw new UserExistException("User email: " + user.getEmail() + " exist!");
             }else {
-              User savedUser = userRepository.save(
-                      new User(
-                              user.getFirstName(),
-                              user.getSecondName(),
-                              user.getEmail(),
-                              passwordEncoder.encode(user.getPassword()),
-                              userRole.get())
-              );
-                Map<String, String> response = new HashMap<>();
-                response.put("firsName", savedUser.getFirstName());
-                response.put("secondName", savedUser.getSecondName());
-                response.put("email", savedUser.getEmail());
-                response.put("token", jwtTokenProvider.generateToken(
-                        savedUser.getEmail(),
-                        savedUser.getRoleId()
-                ));
-                return response;
+                if (userRole.isPresent()) {
+                    User savedUser = userRepository.save(
+                            new User(
+                                    user.getFirstName(),
+                                    user.getSecondName(),
+                                    user.getEmail(),
+                                    passwordEncoder.encode(user.getPassword()),
+                                    userRole.get())
+                    );
+                    Map<String, String> response = new HashMap<>();
+                    response.put("firsName", savedUser.getFirstName());
+                    response.put("secondName", savedUser.getSecondName());
+                    response.put("email", savedUser.getEmail());
+                    response.put("token", jwtTokenProvider.generateToken(
+                            savedUser.getEmail(),
+                            savedUser.getRoleId()
+                    ));
+                    return response;
+                }else {
+                    throw new RoleNotFound("Role: " + userRole.get().getRoleName() + " not found!");
+                }
             }
         }else {
-            throw new IllegalArgumentException("Invalid email pattern");
+            throw new IllegalArgumentException("Invalid email pattern!");
         }
     }
 
@@ -93,7 +99,7 @@ public class UserServiceImpl implements UserService {
                 );
                 return response;
             } else {
-                throw new BadCredentialsException("Invalid email or password!");
+                throw new BadCredentialsException("Invalid password!");
             }
         }else {
             throw new UserNotFoundException("User with email: " + authRequest.getEmail() + "not exist!");
