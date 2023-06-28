@@ -61,7 +61,13 @@ export default {
                 console.log('Регистрация прошла успешно')
                 return user.data
             } catch (e) {
-                console.log('Ошибка регистрации!!')
+                if(e.response.status === 400) {
+                    alert('Такой почты не существует!')
+                }
+                if(e.response.status === 409) {
+                    alert('Такой пользователь уже существует!')
+                }
+                console.log(e)
             }
         }
     }
