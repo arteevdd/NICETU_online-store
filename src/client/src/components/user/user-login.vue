@@ -52,7 +52,13 @@ export default {
                 this.INSTALL_CART()
                 localStorage.user = JSON.stringify(user.data)
             } catch (e) {
-                console.log('Вы не авторизовались!!')
+                if(e.response.status === 401) {
+                    alert('Неверный пароль!')
+                }
+                if(e.response.status === 409) {
+                    alert('Имя пользователя не зарегестрировано!')
+                }
+                console.log(e)
             }
         }
     }

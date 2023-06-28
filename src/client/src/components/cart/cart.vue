@@ -48,7 +48,7 @@ export default {
         incrementItem(index) {
             this.INCREMENT_ITEM(index)
         },
-        Buy() {
+        async Buy() {
             let cart = []
             for (let i in this.CART) {
                 let pro = {
@@ -58,7 +58,26 @@ export default {
                 cart.push(pro)
                 console.log(cart)
             }
-            axios.post('http://localhost:8080/online-shop/orders', cart)
+            let a = `Bearer ${JSON.parse( localStorage.user ).token}` 
+            console.log(a)
+            try {
+                const user = await axios({
+                    method: 'post',
+                    url: 'http://localhost:8080/online-shop/orders',
+                    data: cart,
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8",
+                        'Authorization': 'Bearer ' + JSON.parse( localStorage.user ).token,
+                        'Cache-Control': null,
+                        'X-Requested-With': null,
+                    }
+                    });
+                console.log(JSON.parse( localStorage.user ).token)
+                console.log(user)
+            } catch (e) {
+                console.log(JSON.parse( localStorage.user ).token)
+                console.log(e)
+            }
         }
     }
 }
