@@ -63,7 +63,7 @@ export default {
             try {
                 const user = await axios({
                     method: 'post',
-                    url: 'http://localhost:8080/online-shop/orders',
+                    url: 'http://localhost:8080/online-store/v1/orders',
                     data: cart,
                     headers: {
                         "Content-type": "application/json; charset=UTF-8",
