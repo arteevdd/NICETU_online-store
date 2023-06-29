@@ -58,8 +58,6 @@ export default {
                 cart.push(pro)
                 console.log(cart)
             }
-            let a = `Bearer ${JSON.parse( localStorage.user ).token}` 
-            console.log(a)
             try {
                 const user = await axios({
                     method: 'post',
@@ -72,10 +70,7 @@ export default {
                         'X-Requested-With': null,
                     }
                     });
-                console.log(JSON.parse( localStorage.user ).token)
-                console.log(user)
             } catch (e) {
-                console.log(JSON.parse( localStorage.user ).token)
                 console.log(e)
             }
         }

@@ -61,7 +61,6 @@ export default {
                     });
                 alert('Регистрация прошла успешно')
                 this.$router.push({name: 'login'})
-                return user.data
             } catch (e) {
                 if(e.response.status === 400) {
                     alert('Такой почты не существует!')
