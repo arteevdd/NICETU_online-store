@@ -9,8 +9,8 @@
             <p :style="{ color: status.color }">{{ status.txt }}</p>
         </div>
         <div class="catalog_item_add_to_cart">
-            <h5 v-if="!EMAIL" style="margin-bottom: 20px" class="catalog_item_add_to_cart__price">{{ prod.price }} $</h5>
-            <h5 v-else style="margin-bottom: 20px" class="catalog_item_add_to_cart__price">{{ prod.salePrice }} $ <small class="text-muted" style="text-decoration: line-through">{{ prod.price }} $</small></h5>
+            <h5 v-if="Object.keys(user).length === 0" style="margin-bottom: 20px" class="catalog_item_add_to_cart__price">{{ prod.price }} $</h5>
+            <h5 v-else style="margin-bottom: 20px" class="catalog_item_add_to_cart__price">{{ prod.salePrice }} $ <small v-if="prod.salePrice != prod.price" class="text-muted" style="text-decoration: line-through">{{ prod.price }} $</small></h5>
             <button 
                 :disabled="status.req"
                 class="catalog_item_add_to_cart__btn btn btn-primary"
@@ -27,6 +27,7 @@ export default {
     name: 'v-catalog-item',
     data() {
         return {
+            user: {},
             status: {
                 txt: "Нет в наличии",
                 color: "red",
@@ -65,6 +66,9 @@ export default {
             this.status.color = 'green';
             this.status.txt = 'В наличии';
             this.status.req = false
+        }
+        if (localStorage.getItem('user')) {
+            this.user = JSON.parse( localStorage.user )
         }
     }
 }

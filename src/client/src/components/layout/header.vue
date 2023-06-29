@@ -59,7 +59,6 @@ export default {
         if (localStorage.getItem('user')) {
             this.user = JSON.parse( localStorage.user )
         }
-        console.log(this.user)
     }
 }
 </script>

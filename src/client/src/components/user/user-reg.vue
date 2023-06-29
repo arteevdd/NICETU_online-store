@@ -23,6 +23,7 @@
             </div>
             <button type="button" @click="Regist" class="btn btn-primary" style="margin-bottom: 10px">Regist</button>
             <br>
+            <RouterLink to="/login">Login</RouterLink>
         </form>
     </div>
 </template>
@@ -58,7 +59,8 @@ export default {
                         "Content-type": "application/json; charset=UTF-8"
                     }
                     });
-                console.log('Регистрация прошла успешно')
+                alert('Регистрация прошла успешно')
+                this.$router.push({name: 'login'})
                 return user.data
             } catch (e) {
                 if(e.response.status === 400) {
