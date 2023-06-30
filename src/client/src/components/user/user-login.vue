@@ -10,9 +10,9 @@
           <label for="exampleInputPassword1">Пароль</label>
           <input v-model="user.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
         </div>
-        <button type="button" @click="addUser()" class="btn btn-primary" style="margin-bottom: 10px">Log In</button>
+        <button type="button" @click="addUser()" class="btn btn-primary" style="margin-bottom: 10px">Вход</button>
         <br>
-        <RouterLink to="/regist">Registration</RouterLink>
+        <RouterLink to="/regist">Регистрация</RouterLink>
     </form>
 </div>
 </template>
