@@ -1,29 +1,29 @@
 <template>
     <div class="user_reg">
         <form @submit.prevent="Regist">
-            <h4 class="user_reg__i">Registration</h4>
+            <h4 class="user_reg__i">Регистрация</h4>
             <div class="row user_reg__i">
                 <div class="col">
-                  <label for="Name">Name</label>
+                  <label for="Name">Имя</label>
                   <input type="text" class="form-control" id="Name" v-model="user.firstName" required>
                 </div>
                 <div class="col">
-                  <label for="Lastname">Lastame</label>
+                  <label for="Lastname">Фамилия</label>
                   <input type="text" class="form-control" id="Lastname" v-model="user.secondName" required>
                 </div>
             </div>
             <div class="user_reg__i form-group">
-              <label for="Email">Email address</label>
+              <label for="Email">Почта</label>
               <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email" v-model="user.email" required>
-              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+              <small id="emailHelp" class="form-text text-muted">Мы никогда не передадим ваши личные данные кому-либо еще.</small>
             </div>
             <div class="user_reg__i form-group">
-              <label for="exampleInputPassword1">Password</label>
+              <label for="exampleInputPassword1">Пароль</label>
               <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="user.password" required>
             </div>
-            <button type="submit" class="btn btn-primary" style="margin-bottom: 10px">Regist</button>
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 10px">Регистрация</button>
             <br>
-            <RouterLink to="/login">Login</RouterLink>
+            <RouterLink to="/login">Вход</RouterLink>
         </form>
     </div>
 </template>
