@@ -70,6 +70,7 @@ export default {
                         'X-Requested-With': null,
                     }
                     });
+                return user
             } catch (e) {
                 console.log(e)
             }

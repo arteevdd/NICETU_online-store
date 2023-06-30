@@ -1,27 +1,27 @@
 <template>
     <div class="user_reg">
-        <form>
+        <form @submit.prevent="Regist">
             <h4 class="user_reg__i">Registration</h4>
             <div class="row user_reg__i">
                 <div class="col">
                   <label for="Name">Name</label>
-                  <input type="text" class="form-control" id="Name" v-model="user.firstName">
+                  <input type="text" class="form-control" id="Name" v-model="user.firstName" required>
                 </div>
                 <div class="col">
                   <label for="Lastname">Lastame</label>
-                  <input type="text" class="form-control" id="Lastname" v-model="user.secondName">
+                  <input type="text" class="form-control" id="Lastname" v-model="user.secondName" required>
                 </div>
             </div>
             <div class="user_reg__i form-group">
               <label for="Email">Email address</label>
-              <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email" v-model="user.email">
+              <input type="email" class="form-control" id="Email" aria-describedby="emailHelp" placeholder="Enter email" v-model="user.email" required>
               <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
             <div class="user_reg__i form-group">
               <label for="exampleInputPassword1">Password</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="user.password">
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" v-model="user.password" required>
             </div>
-            <button type="button" @click="Regist" class="btn btn-primary" style="margin-bottom: 10px">Regist</button>
+            <button type="submit" class="btn btn-primary" style="margin-bottom: 10px">Regist</button>
             <br>
             <RouterLink to="/login">Login</RouterLink>
         </form>
@@ -40,11 +40,12 @@ export default {
                 secondName: '',
                 email: '', 
                 password: '',
-            }
+            },
+            errors: []
         }
     },
     methods: {
-        async Regist() {
+        async Regist(e) {
             try {
                 const user = await axios({
                     method: 'post',
@@ -61,6 +62,7 @@ export default {
                     });
                 alert('Регистрация прошла успешно')
                 this.$router.push({name: 'login'})
+                return user
             } catch (e) {
                 if(e.response.status === 400) {
                     alert('Такой почты не существует!')
@@ -70,6 +72,7 @@ export default {
                 }
                 console.log(e)
             }
+            e.preventDefault
         }
     }
 

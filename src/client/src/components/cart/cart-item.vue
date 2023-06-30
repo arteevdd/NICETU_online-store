@@ -78,7 +78,7 @@ export default {
     &__img {
         margin: 15px;
         max-width: 220px;
-        max-height: 300px;
+        max-height: 280px;
     }
     &_about {
         margin-top: 30px;
