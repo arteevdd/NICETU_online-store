@@ -2,7 +2,6 @@ package test.project.onlineshop.service.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import test.project.onlineshop.dto.ProductListDto;
 import test.project.onlineshop.entity.Product;
 import test.project.onlineshop.exception.ProductNotFoundException;
 import test.project.onlineshop.repository.ProductRepository;
@@ -21,8 +20,8 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public ProductListDto findProductListDtoByProductId(Integer productId) {
-        Optional<ProductListDto> product = productRepository.findProductListDtoByProductId(productId);
+    public Product findProductByProductId(Integer productId) {
+        Optional<Product> product = productRepository.findProductByProductId(productId);
         if (product.isPresent()){
             return product.get();
         }else {

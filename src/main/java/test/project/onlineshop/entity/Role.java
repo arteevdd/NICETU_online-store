@@ -1,6 +1,8 @@
 package test.project.onlineshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,6 +13,8 @@ import java.util.Objects;
 @Entity
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
 @Table(name = "`role`")
 public class Role {
 
@@ -33,10 +37,6 @@ public class Role {
         this.roleName = roleName;
     }
 
-    public Role(Integer roleId, String roleName){
-        this.roleId = roleId;
-        this.roleName = roleName;
-    }
 
     @Override
     public String toString() {

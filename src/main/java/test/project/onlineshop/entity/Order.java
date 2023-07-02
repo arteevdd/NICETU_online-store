@@ -1,14 +1,17 @@
 package test.project.onlineshop.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @Table(name = "`order`")
 public class Order {
@@ -50,5 +53,18 @@ public class Order {
                 ", price=" + price +
                 ", productId=" + productId +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Order order = (Order) o;
+        return Objects.equals(orderId, order.orderId) && Objects.equals(quantity, order.quantity) && Objects.equals(price, order.price) && Objects.equals(productId, order.productId) && Objects.equals(cartId, order.cartId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orderId, quantity, price, productId, cartId);
     }
 }

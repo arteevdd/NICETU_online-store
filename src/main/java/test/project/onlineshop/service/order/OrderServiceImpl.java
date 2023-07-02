@@ -64,7 +64,7 @@ public class OrderServiceImpl implements OrderService{
                                 currentProduct,
                                 currentCart,
                                 quantity,
-                                productRepository.findProductByProductId(order.getProductId()).get().getPrice() * quantity
+                                productRepository.findProductByProductId(order.getProductId()).get().getSalePrice() * quantity
                         )
                 );
                 productRepository.updateProductCountByProductId(order.getProductId(), productRepository.findProductByProductId(order.getProductId()).get().getCount() - order.getQuantity());

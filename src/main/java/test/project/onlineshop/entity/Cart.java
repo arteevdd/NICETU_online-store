@@ -2,15 +2,18 @@ package test.project.onlineshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @Table(name = "cart")
 public class Cart {
@@ -41,5 +44,18 @@ public class Cart {
                 "cartId=" + cartId +
                 ", userId=" + userId +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cart cart = (Cart) o;
+        return Objects.equals(cartId, cart.cartId) && Objects.equals(userId, cart.userId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(cartId, userId);
     }
 }
