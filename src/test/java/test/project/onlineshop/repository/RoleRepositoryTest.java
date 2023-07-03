@@ -10,21 +10,22 @@ import test.project.onlineshop.entity.Role;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @DataJpaTest
-@DisplayName("CRUD - methods: Role")
+@DisplayName("Repository layer: Role")
 class RoleRepositoryTest {
 
     @Autowired
     private RoleRepository roleRepository;
 
-    private final Role correctRole;
+    private final Role expectedRole;
     private final Role notExistRole;
 
     {
-        correctRole = Role.builder()
+        expectedRole = Role.builder()
                 .roleId(1)
                 .roleName("ROLE_USER")
                 .build();
@@ -38,9 +39,9 @@ class RoleRepositoryTest {
     @Test
     @DisplayName("When return correct Role Entity")
     void findRoleByRoleName_ReturnsCorrectEntity() {
-        Optional<Role> role = roleRepository.findRoleByRoleName(correctRole.getRoleName());
+        Optional<Role> role = roleRepository.findRoleByRoleName(expectedRole.getRoleName());
         assertNotEquals(Optional.empty(), role);
-        role.ifPresent(value -> assertEquals(correctRole, value));
+        role.ifPresent(value -> assertEquals(expectedRole, value));
     }
 
     @Test

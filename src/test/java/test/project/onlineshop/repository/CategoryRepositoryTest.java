@@ -12,55 +12,53 @@ import test.project.onlineshop.entity.Category;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @DataJpaTest
-@DisplayName("CRUD - methods: Category")
+@DisplayName("Repository layer: Category")
 class CategoryRepositoryTest {
 
     @Autowired
     private CategoryRepository categoryRepository;
 
-    private List<CategoryDto> correctTestTree = new ArrayList<>();
+    private final List<CategoryDto> expectedTree = new ArrayList<>();
 
-    private List<Category> correctTestChildren = new ArrayList<>();
-
-    private final int testRelatedProductId = 4;
+    private final List<Category> expectedChildren = new ArrayList<>();
 
     {
-        correctTestTree.add(CategoryDto.builder()
+        expectedTree.add(CategoryDto.builder()
                 .categoryId(1)
                 .parentCategoryId(null)
                 .nameCategory("Смартфоны")
                 .build()
         );
-        correctTestTree.add(CategoryDto.builder()
+        expectedTree.add(CategoryDto.builder()
                 .categoryId(2)
                 .parentCategoryId(1)
                 .nameCategory("Apple")
                 .build()
         );
-        correctTestTree.add(CategoryDto.builder()
+        expectedTree.add(CategoryDto.builder()
                 .categoryId(3)
                 .parentCategoryId(1)
                 .nameCategory("Samsung")
                 .build()
         );
-        correctTestTree.add(CategoryDto.builder()
+        expectedTree.add(CategoryDto.builder()
                 .categoryId(4)
                 .parentCategoryId(1)
                 .nameCategory("Сопутствующие товары")
                 .build()
         );
-        correctTestTree.add(CategoryDto.builder()
+        expectedTree.add(CategoryDto.builder()
                 .categoryId(5)
                 .parentCategoryId(4)
                 .nameCategory("Наушники")
                 .build()
         );
 
-        correctTestChildren.add(Category.builder()
+        expectedChildren.add(Category.builder()
                 .categoryId(5)
                 .parentCategoryId(Category.builder()
                         .categoryId(4)
@@ -79,14 +77,15 @@ class CategoryRepositoryTest {
     @Test
     @DisplayName("Return correct tree hierarchy")
     void categoryTree_ReturnsCorrectTree() {
-        Iterable<CategoryDto> categories = categoryRepository.categoryTree();
-        assertEquals(correctTestTree, categories);
+        Iterable<CategoryDto> actual = categoryRepository.categoryTree();
+        assertEquals(expectedTree, actual);
     }
 
     @Test
     @DisplayName("Return correct children by parent_id")
     void findSubCategories() {
-        Iterable<Category> children = categoryRepository.findSubCategories(testRelatedProductId);
-        assertEquals(correctTestChildren, children);
+        int testRelatedProductId = 4;
+        Iterable<Category> actual = categoryRepository.findSubCategories(testRelatedProductId);
+        assertEquals(expectedChildren, actual);
     }
 }

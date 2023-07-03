@@ -12,11 +12,11 @@ import test.project.onlineshop.entity.User;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @DataJpaTest
-@DisplayName("CRUD - methods: Cart")
+@DisplayName("Repository layer: Cart")
 class CartRepositoryTest {
 
     @Autowired

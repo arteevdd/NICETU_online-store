@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import test.project.onlineshop.entity.*;
+import test.project.onlineshop.entity.Cart;
+import test.project.onlineshop.entity.Order;
+import test.project.onlineshop.entity.Product;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @DataJpaTest
-@DisplayName("CRUD - methods: Order")
+@DisplayName("Repository layer: Order")
 class OrderRepositoryTest {
 
     @Autowired

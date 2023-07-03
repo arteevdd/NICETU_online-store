@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @DataJpaTest
-@DisplayName("CRUD - methods: User")
+@DisplayName("Repository layer: User")
 class UserRepositoryTest {
 
     @Autowired
@@ -25,14 +25,14 @@ class UserRepositoryTest {
 
     private final PasswordEncoder passwordEncoder;
 
-    private final User correctTestUser;
+    private final User expectedUser;
 
     private final User nonExistentTestUser;
 
     {
         passwordEncoder = new BCryptPasswordEncoder();
 
-        correctTestUser =
+        expectedUser =
                 User.builder()
                 .firstName("Danil")
                 .secondName("Arteev")
@@ -60,15 +60,15 @@ class UserRepositoryTest {
     @Test
     @DisplayName("When the correct user data will be returned")
     void findUserByEmail_ReturnsCorrectEntity() {
-        Optional<User> user = userRepository.findUserByEmail(correctTestUser.getEmail());
+        Optional<User> user = userRepository.findUserByEmail(expectedUser.getEmail());
         assertNotEquals(Optional.empty(), user);
         user.ifPresent(
                 value -> assertAll(
-                        () -> assertEquals(correctTestUser.getFirstName(), value.getFirstName()),
-                        () -> assertEquals(correctTestUser.getSecondName(), value.getSecondName()),
-                        () -> assertEquals(correctTestUser.getEmail(), value.getEmail()),
-                        () -> assertEquals(correctTestUser.getRoleId(), value.getRoleId()),
-                        () -> assertTrue(passwordEncoder.matches(correctTestUser.getPassword(), value.getPassword()))
+                        () -> assertEquals(expectedUser.getFirstName(), value.getFirstName()),
+                        () -> assertEquals(expectedUser.getSecondName(), value.getSecondName()),
+                        () -> assertEquals(expectedUser.getEmail(), value.getEmail()),
+                        () -> assertEquals(expectedUser.getRoleId(), value.getRoleId()),
+                        () -> assertTrue(passwordEncoder.matches(expectedUser.getPassword(), value.getPassword()))
                 )
         );
     }
@@ -76,17 +76,17 @@ class UserRepositoryTest {
     @Test
     @DisplayName("When looking for a non-existent user")
     void findUserByEmail_ReturnsEmptyOptional() {
-        Optional<User> user = userRepository.findUserByEmail(nonExistentTestUser.getEmail());
-        assertEquals(Optional.empty(), user);
+        Optional<User> actual = userRepository.findUserByEmail(nonExistentTestUser.getEmail());
+        assertEquals(Optional.empty(), actual);
     }
 
     @Test
     @DisplayName("Save and return a not exist user by email")
     void saveNotExistUser_AndFindByEmail_ReturnsCorrectEntity() {
-        Optional<User> user = userRepository.findUserByEmail(nonExistentTestUser.getEmail());
-        assertEquals(Optional.empty(), user);
+        Optional<User> actual = userRepository.findUserByEmail(nonExistentTestUser.getEmail());
+        assertEquals(Optional.empty(), actual);
         userRepository.save(nonExistentTestUser);
-        user = userRepository.findUserByEmail(nonExistentTestUser.getEmail());
-        user.ifPresent(value -> assertEquals(nonExistentTestUser, value));
+        actual = userRepository.findUserByEmail(nonExistentTestUser.getEmail());
+        actual.ifPresent(value -> assertEquals(nonExistentTestUser, value));
     }
 }

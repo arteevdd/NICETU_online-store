@@ -7,27 +7,26 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import test.project.onlineshop.dto.ProductListDto;
-import test.project.onlineshop.entity.Product;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 @DataJpaTest
-@DisplayName("CRUD - methods: Product category")
+@DisplayName("Repository layer: Product category")
 class ProductCategoryRepositoryTest {
 
     @Autowired
     private ProductCategoryRepository productCategoryRepository;
 
-    private final List<ProductListDto> correctTestProductsReceivedFromAppleCategory = new ArrayList<>();
+    private final List<ProductListDto> expectedProductsReceivedFromAppleCategory = new ArrayList<>();
 
-    private final List<ProductListDto> correctTestProductsReceivedFromSmartPhoneCategory = new ArrayList<>();
+    private final List<ProductListDto> expectedProductsReceivedFromSmartPhoneCategory = new ArrayList<>();
 
     {
-        correctTestProductsReceivedFromAppleCategory.add(ProductListDto.builder()
+        expectedProductsReceivedFromAppleCategory.add(ProductListDto.builder()
                 .productId(1)
                 .nameProduct("Смартфон Apple iPhone 14")
                 .price(86990.0)
@@ -37,7 +36,7 @@ class ProductCategoryRepositoryTest {
                 .road("iPhone14.jpg")
                 .build()
         );
-        correctTestProductsReceivedFromAppleCategory.add(ProductListDto.builder()
+        expectedProductsReceivedFromAppleCategory.add(ProductListDto.builder()
                 .productId(2)
                 .nameProduct("Смартфон Apple iPhone 13 Pro Max")
                 .price(125990.0)
@@ -47,7 +46,7 @@ class ProductCategoryRepositoryTest {
                 .road("iPhone13ProMax.jpg")
                 .build()
         );
-        correctTestProductsReceivedFromAppleCategory.add(ProductListDto.builder()
+        expectedProductsReceivedFromAppleCategory.add(ProductListDto.builder()
                 .productId(3)
                 .nameProduct("Смартфон Apple iPhone 11")
                 .price(53390.0)
@@ -57,7 +56,7 @@ class ProductCategoryRepositoryTest {
                 .road("iPhone11.jpg")
                 .build()
         );
-        correctTestProductsReceivedFromSmartPhoneCategory.add(ProductListDto.builder()
+        expectedProductsReceivedFromSmartPhoneCategory.add(ProductListDto.builder()
                 .productId(6)
                 .nameProduct("Смартфон Huawei P50")
                 .price(39999.0)
@@ -73,15 +72,15 @@ class ProductCategoryRepositoryTest {
     @DisplayName("Will returns all products relationship to category Apple")
     void findProductCategoriesByCategoryId_ReturnsAllProductsRelationshipToApple() {
         int testAppleCategoryId = 2;
-        Iterable<ProductListDto> products = productCategoryRepository.findProductCategoriesByCategoryId(testAppleCategoryId);
-        assertEquals(correctTestProductsReceivedFromAppleCategory, products);
+        Iterable<ProductListDto> actual = productCategoryRepository.findProductCategoriesByCategoryId(testAppleCategoryId);
+        assertEquals(expectedProductsReceivedFromAppleCategory, actual);
     }
 
     @Test
     @DisplayName("Will returns all products relationship to category Smartphone")
     void findProductCategoriesByCategoryId_ReturnsAllProductsRelationshipToSmartphone() {
         int testSmartphoneCategoryId = 1;
-        Iterable<ProductListDto> products = productCategoryRepository.findProductCategoriesByCategoryId(testSmartphoneCategoryId);
-        assertEquals(correctTestProductsReceivedFromSmartPhoneCategory, products);
+        Iterable<ProductListDto> actual = productCategoryRepository.findProductCategoriesByCategoryId(testSmartphoneCategoryId);
+        assertEquals(expectedProductsReceivedFromSmartPhoneCategory, actual);
     }
 }
