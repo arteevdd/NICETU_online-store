@@ -90,11 +90,11 @@ export default {
                 this.CLEAR_CART(JSON.parse( localStorage.user ).email)
                 return user
             } catch (e) {
-                if(e.response.status === 401) {
-                    alert('Неверный пароль!')
+                if(e.response.status === 500) {
+                    alert('Попробуйте еще раз')
                 }
-                if(e.response.status === 409) {
-                    alert('Имя пользователя не зарегестрировано!')
+                if(e.response.status === 400) {
+                    alert('Одного из товаров больше нет в наличии')
                 }
                 console.log(e)
             }

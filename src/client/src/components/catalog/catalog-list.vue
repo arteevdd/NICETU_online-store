@@ -97,9 +97,7 @@ export default {
         },
         setBrdcrm(cat) {
             this.CLEAR_BRDCRMS()
-            console.log(cat)
             let brdcrm = this.CATEGORIES.find(el => el.categoryId === cat.categoryId)
-            console.log(brdcrm.categoryId)
             this.GET_PRODUCTS_BY_CATEGORY(brdcrm.categoryId)
             while (brdcrm.parentCategoryId) {
                 this.SET_BRDCRMS(brdcrm.nameCategory)
