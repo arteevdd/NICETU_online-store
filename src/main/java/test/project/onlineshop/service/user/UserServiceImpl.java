@@ -58,6 +58,7 @@ public class UserServiceImpl implements UserService {
                                     .secondName(user.getSecondName())
                                     .email(user.getEmail())
                                     .password(passwordEncoder.encode(user.getPassword()))
+                                    .roleId(userRole.get())
                                     .build()
                     );
                 }else {

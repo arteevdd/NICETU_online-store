@@ -45,8 +45,8 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
         if (tempCategory.isEmpty()) {
             productCategoryList.add((List<ProductListDto>) productCategoryRepository.findProductCategoriesByCategoryId(category.getCategoryId()));
         }else {
-            for (Category category1 : tempCategory) {
-                addProductsByCategory(category1, productCategoryList);
+            for (Category elemCategory : tempCategory) {
+                addProductsByCategory(elemCategory, productCategoryList);
             }
         }
     }

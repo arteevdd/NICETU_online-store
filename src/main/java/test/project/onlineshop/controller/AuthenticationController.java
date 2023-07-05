@@ -33,6 +33,7 @@ public class AuthenticationController {
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity registration(@RequestBody UserRequest user) {
         try {
+            userService.registration(user);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());

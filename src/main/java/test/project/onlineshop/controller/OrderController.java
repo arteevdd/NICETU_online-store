@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.OrderDto;
+import test.project.onlineshop.exception.ProductNotFoundException;
+import test.project.onlineshop.exception.RejectedTransactionException;
 import test.project.onlineshop.service.order.OrderService;
 
 import java.util.List;
@@ -26,7 +29,15 @@ public class OrderController {
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addNewOrders(@RequestBody List<OrderDto> orderDtos){
-        orderService.addNewOrders(orderDtos);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        try{
+            orderService.addNewOrders(orderDtos);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (RejectedTransactionException | ProductNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        } catch (IllegalArgumentException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
+        }
+
+
     }
 }
