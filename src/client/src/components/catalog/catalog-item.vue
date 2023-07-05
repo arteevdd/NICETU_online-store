@@ -1,6 +1,10 @@
 <template>
     <div class="catalog_item">
-    <img class="catalog_item__img" :src="require(`../../../public/images/${prod.road}`)" alt="img">
+    <img 
+        class="catalog_item__img" 
+        :src="require(`../../../public/images/${prod.road}`)" 
+        alt="img"
+    >
         <div class="catalog_item_about">
             <p> {{ prod.nameProduct }}</p>
             <p>{{ prod.description }}</p>
@@ -9,13 +13,34 @@
             <p :style="{ color: status.color }">{{ status.txt }}</p>
         </div>
         <div class="catalog_item_add_to_cart">
-            <h5 v-if="Object.keys(user).length === 0" style="margin-bottom: 20px" class="catalog_item_add_to_cart__price">{{ prod.price }} $</h5>
-            <h5 v-else style="margin-bottom: 20px" class="catalog_item_add_to_cart__price">{{ prod.salePrice }} $ <small v-if="prod.salePrice != prod.price" class="text-muted" style="text-decoration: line-through">{{ prod.price }} $</small></h5>
+            <h5 
+                v-if="Object.keys(user).length === 0" 
+                style="margin-bottom: 20px" 
+                class="catalog_item_add_to_cart__price"
+            >
+            {{ prod.price }} Р
+            </h5>
+            <h5 
+                v-else 
+                style="margin-bottom: 20px" 
+                class="catalog_item_add_to_cart__price"
+            >
+            {{ prod.salePrice }} Р 
+                <small 
+                    v-if="prod.salePrice != prod.price" 
+                    class="text-muted" 
+                    style="text-decoration: line-through"
+                >
+                {{ prod.price }} Р
+                </small>
+            </h5>
             <button 
                 :disabled="status.req"
                 class="catalog_item_add_to_cart__btn btn btn-primary"
                 @click="addToCart"
-                >Add to cart</button>
+            >
+            Add to cart
+            </button>
         </div>
     </div>
 </template>

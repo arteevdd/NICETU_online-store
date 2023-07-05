@@ -4,14 +4,22 @@
         <catalogList/>
     </div>
     <div class="header_right">
-        <RouterLink v-if="Object.keys(user).length === 0" to="/login">
+        <RouterLink 
+            v-if="Object.keys(user).length === 0" 
+            to="/login"
+        >
             <div class="header_right_user">
                 Войти 
             </div>
         </RouterLink>
         <div v-else>
             {{ user.firstName }}
-            <button @click="exit" class="btn btn-link">Выйти</button>
+            <button 
+                @click="exit" 
+                class="btn btn-link"
+            >
+            Выйти
+            </button>
         </div>
         <RouterLink to="/cart">
             <div class="header_right_cart">

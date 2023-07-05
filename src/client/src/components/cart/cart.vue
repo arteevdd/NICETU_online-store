@@ -2,18 +2,24 @@
     <div class="cart">
         <div class="cart__item">
             <CartItem
-            v-for="(item, index) in CART"
-            :key="item.productId"
-            :cart_data_item="item"
-            @deleteFromCart="deleteFromCart(index)"
-            @decrementItem="decrementItem(index)"
-            @incrementItem="incrementItem(index)"/>
+                v-for="(item, index) in CART"
+                :key="item.productId"
+                :cart_data_item="item"
+                @deleteFromCart="deleteFromCart(index)"
+                @decrementItem="decrementItem(index)"
+                @incrementItem="incrementItem(index)"
+            />
         </div>
         <div class="cart_total">
             <h5 style="margin-bottom: 20px">Your order</h5>
             <p style="font-size: 17px; margin-bottom: 5px">Количество товаров: {{ CART.reduce((a, b) => a + b.quantity, 0) }}</p>
             <p style="font-size: 17px;">Итого: {{ CART.reduce((a, b) => a + b.quantity * b.salePrice, 0) }}$</p>
-            <button class="btn btn-primary" @click="Buy">Оформить заказ</button>
+            <button 
+                class="btn btn-primary" 
+                @click="Buy"
+            >
+            Оформить заказ
+            </button>
         </div>
     </div>
 </template>

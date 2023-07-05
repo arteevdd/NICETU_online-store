@@ -1,23 +1,35 @@
 <template>
     <div class="cart_item">
-            <img class="cart_item__img" :src="require(`../../../public/images/${cart_data_item.road}`)" alt="img">
+            <img class="cart_item__img" 
+                :src="require(`../../../public/images/${cart_data_item.road}`)" 
+                alt="img"
+            >
             <div class="cart_item_about">
                 <h2>{{ cart_data_item.nameProduct }}</h2>
             </div>
             <div class="cart_item_right">
                 <div class="cart_item_right__quantity">
-                    <button @click="decrementItem" class="btn btn-outline-primary btn-sm">
-                        -
+                    <button 
+                        @click="decrementItem" 
+                        class="btn btn-outline-primary btn-sm"
+                    >
+                    -
                     </button>
                     <p class="cart_item_right__quantity_i">{{ cart_data_item.quantity }}</p>
-                    <button @click="incrementItem" class="btn btn-outline-primary btn-sm" :disabled="flagBtn">
-                        +
+                    <button 
+                        @click="incrementItem" 
+                        class="btn btn-outline-primary btn-sm" 
+                        :disabled="flagBtn"
+                    >
+                    +
                     </button>
                 </div>
                 <button 
                     class="cart_item_right__delete_btn btn btn-primary"
                     @click="deleteFromCart"
-                    >Delete</button>
+                >
+                Delete
+                </button>
             </div>
             <div class="cart_item__price">
                 <p>{{ cart_data_item.salePrice }}</p>

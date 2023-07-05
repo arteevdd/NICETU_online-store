@@ -1,7 +1,13 @@
 <template>
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-          <li class="breadcrumb-item" v-for="el in BRDCRMS" :key="el">{{ el }}</li>
+            <li 
+                class="breadcrumb-item" 
+                v-for="el in BRDCRMS" 
+                :key="el"
+            >
+            {{ el }}
+            </li>
         </ol>
     </nav>
     <div>

@@ -6,18 +6,34 @@
             id="dropdownMenuButton1" 
             data-bs-toggle="dropdown" 
             aria-expanded="false"
-            @click="drawTree">
-          Каталог
+            @click="drawTree"
+        >
+        Каталог
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li v-for="category in tree[0]" :key="category">
-                <RouterLink style="text-decoration: none" :to="{ name: 'type', params: { type: category.categoryId}}">
-                    <h4 @click="setBrdcrm(category)" class="dropdown-item">{{ category.nameCategory }}</h4>
+        <ul 
+            class="dropdown-menu" 
+            aria-labelledby="dropdownMenuButton1"
+        >
+            <li 
+                v-for="category in tree[0]" 
+                :key="category"
+            >
+                <RouterLink 
+                    style="text-decoration: none" 
+                    :to="{ name: 'type', params: { type: category.categoryId}}"
+                >
+                    <h4 
+                        @click="setBrdcrm(category)" 
+                        class="dropdown-item"
+                    >
+                    {{ category.nameCategory }}
+                    </h4>
                 </RouterLink>
                 <Vtree 
                     :tree="tree"
                     :catId="category.categoryId"
-                    @setBrdcrm="setBrdcrm"/> 
+                    @setBrdcrm="setBrdcrm"
+                /> 
             </li>
         </ul>
     </div>
