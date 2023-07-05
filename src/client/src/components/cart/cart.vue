@@ -9,11 +9,21 @@
                 @decrementItem="decrementItem(index)"
                 @incrementItem="incrementItem(index)"
             />
+            <div 
+                v-if="CART.length === 0"
+                style="text-align: center; margin-top: 20px"
+            >
+                <h4>Корзина пустая :(</h4>
+                <br>
+                <RouterLink :to="{name: 'home'}">
+                    Перейти к покупкам?
+                </RouterLink>
+            </div>
         </div>
         <div class="cart_total">
             <h5 style="margin-bottom: 20px">Your order</h5>
             <p style="font-size: 17px; margin-bottom: 5px">Количество товаров: {{ CART.reduce((a, b) => a + b.quantity, 0) }}</p>
-            <p style="font-size: 17px;">Итого: {{ CART.reduce((a, b) => a + b.quantity * b.salePrice, 0) }}$</p>
+            <p style="font-size: 17px;">Итого: {{ CART.reduce((a, b) => a + b.quantity * b.salePrice, 0) }}Р</p>
             <button 
                 class="btn btn-primary" 
                 @click="Buy"
@@ -43,7 +53,8 @@ export default {
         ...mapActions([
             'DELETE_FROM_CART',
             'DECREMENT_ITEM',
-            'INCREMENT_ITEM'
+            'INCREMENT_ITEM',
+            'CLEAN_CART'
         ]),
         deleteFromCart(index) {
             this.DELETE_FROM_CART(index)
@@ -62,7 +73,6 @@ export default {
                     quantity: this.CART[i].quantity
                 }
                 cart.push(pro)
-                console.log(cart)
             }
             try {
                 const user = await axios({
@@ -76,8 +86,16 @@ export default {
                         'X-Requested-With': null,
                     }
                     });
+                alert('Заказ успешно оформлен!')
+                this.CLEAR_CART(JSON.parse( localStorage.user ).email)
                 return user
             } catch (e) {
+                if(e.response.status === 401) {
+                    alert('Неверный пароль!')
+                }
+                if(e.response.status === 409) {
+                    alert('Имя пользователя не зарегестрировано!')
+                }
                 console.log(e)
             }
         }

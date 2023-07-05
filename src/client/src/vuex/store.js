@@ -62,8 +62,9 @@ const store = createStore({
         CLEAR_BRDCRMS: (state) => {
             state.brdcrms = []
         },
-        CLEAR_CART: (state) => {
+        CLEAR_CART: (state, mail) => {
             state.cart = []
+            localStorage.setItem(`${mail}_cart`, state.cart)
         },
         INSTALL_CART: (state, mail) => {
             if (localStorage.getItem(`${mail}_cart`)) {
@@ -129,11 +130,11 @@ const store = createStore({
         SET_PRODUCTS_TO_STATE({commit}, products) {
             commit('SET_PRODUCTS_TO_STATE', products)
         },
-        CLEAR_CART({commit}, cart) {
-            commit('CLEAR_CART', cart)
+        CLEAR_CART({commit}, email) {
+            commit('CLEAR_CART', email)
         },
-        INSTALL_CART({commit}, mail) {
-            commit('INSTALL_CART', mail)
+        INSTALL_CART({commit}, email) {
+            commit('INSTALL_CART', email)
         }
     },
     getters: {
