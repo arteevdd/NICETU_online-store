@@ -80,17 +80,16 @@ export default {
 
 <style lang="scss" scoped>
 .cart_item{
+    border-bottom: 1px solid lightgray;
     margin-bottom: 40px;
-    display: flex;
-    flex-direction: row;
-    min-width: 670px;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr 1fr;
     height: 300px;
-    border-bottom: 1px solid grey;
-    justify-content: space-between;
+    align-items: center;
     &__img {
         margin: 15px;
         max-width: 220px;
-        max-height: 280px;
+        max-height: 260px;
     }
     &_about {
         margin-top: 30px;

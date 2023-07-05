@@ -110,7 +110,7 @@ export default {
     &__img {
         margin-right: 30px;
         max-width: 220px;
-        max-height: 300px;
+        max-height: 260px;
     }
     &_add_to_cart {
         display: flex;

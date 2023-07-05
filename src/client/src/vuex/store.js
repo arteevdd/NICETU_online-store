@@ -62,13 +62,13 @@ const store = createStore({
         CLEAR_BRDCRMS: (state) => {
             state.brdcrms = []
         },
-        INSTALL_CART: (state) => {
-            if (localStorage.getItem('cart')) {
-                state.cart = JSON.parse(localStorage.getItem('cart'))
-            }
-        },
         CLEAR_CART: (state) => {
             state.cart = []
+        },
+        INSTALL_CART: (state, mail) => {
+            if (localStorage.getItem(`${mail}_cart`)) {
+                state.cart = JSON.parse(localStorage.getItem(`${mail}_cart`))
+            }
         }
     },
     actions: {
@@ -129,11 +129,11 @@ const store = createStore({
         SET_PRODUCTS_TO_STATE({commit}, products) {
             commit('SET_PRODUCTS_TO_STATE', products)
         },
-        INSTALL_CART({commit}, cart) {
-            commit('INSTALL_CART', cart)
-        },
         CLEAR_CART({commit}, cart) {
             commit('CLEAR_CART', cart)
+        },
+        INSTALL_CART({commit}, mail) {
+            commit('INSTALL_CART', mail)
         }
     },
     getters: {

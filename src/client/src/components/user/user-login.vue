@@ -68,8 +68,9 @@ export default {
                     }
                     });
                 this.$router.push({name: 'home'})
-                this.INSTALL_CART()
                 localStorage.user = JSON.stringify(user.data)
+                let name = JSON.parse( localStorage.user ).firstName 
+                this.INSTALL_CART(name)
             } catch (e) {
                 if(e.response.status === 401) {
                     alert('Неверный пароль!')

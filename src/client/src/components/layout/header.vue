@@ -56,8 +56,8 @@ export default {
             'CLEAR_CART'
         ]),
         exit() {
+            localStorage.setItem(`${this.user.firstName}_cart`, JSON.stringify(this.CART))
             localStorage.removeItem('user')
-            localStorage.setItem('cart', JSON.stringify(this.CART))
             this.user = {}
             this.CLEAR_CART()
             router.push({name: 'home'})
