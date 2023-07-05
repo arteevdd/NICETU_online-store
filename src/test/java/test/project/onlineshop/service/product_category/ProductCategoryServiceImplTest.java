@@ -1,6 +1,5 @@
 package test.project.onlineshop.service.product_category;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -9,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import test.project.onlineshop.dto.ProductListDto;
 import test.project.onlineshop.entity.Category;
+import test.project.onlineshop.exception.ProductCategoryNotFoundException;
 import test.project.onlineshop.repository.CategoryRepository;
 import test.project.onlineshop.repository.ProductCategoryRepository;
 
@@ -17,7 +17,8 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -163,12 +164,16 @@ class ProductCategoryServiceImplTest {
     }
 
     @Test
-    @DisplayName("When an empty List returns")
-    void findProductCategoriesByCategoryId_ReturnsEmptyList() {
-        when(productCategoryRepository.findProductCategoriesByCategoryId(anyInt())).thenReturn(Collections.emptyList());
+    @DisplayName("When products not found")
+    void findProductCategoriesByCategoryId_ThrowsProductCategoryNotFoundException() {
         when(categoryRepository.findSubCategories(anyInt())).thenReturn(Collections.emptyList());
+        when(productCategoryRepository.findProductCategoriesByCategoryId(anyInt())).thenReturn(Collections.emptyList());
 
-        assertEquals(Collections.emptyList(), productCategoryService.findProductCategoriesByCategoryId(anyInt()));
+        assertThrows(ProductCategoryNotFoundException.class, () -> {
+            productCategoryService.findProductCategoriesByCategoryId(anyInt());
+        });
+        verify(productCategoryRepository, times(1)).findProductCategoriesByCategoryId(anyInt());
+        verify(categoryRepository, times(1)).findSubCategories(anyInt());
     }
 
     @Test

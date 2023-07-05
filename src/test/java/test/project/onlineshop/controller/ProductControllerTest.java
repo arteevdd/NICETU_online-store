@@ -1,38 +1,39 @@
-package test.project.onlineshop.service.product;
+package test.project.onlineshop.controller;
 
+import lombok.var;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.entity.Product;
 import test.project.onlineshop.entity.Sale;
 import test.project.onlineshop.exception.ProductNotFoundException;
-import test.project.onlineshop.repository.ProductRepository;
+import test.project.onlineshop.service.product.ProductService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Service layer: Product")
-class ProductServiceImplTest {
+@DisplayName("Web layer: Product")
+class ProductControllerTest {
 
     @Mock
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @InjectMocks
-    private ProductServiceImpl productService;
+    private ProductController productController;
 
     private final List<Product> expectedProducts = new ArrayList<>();
 
-    Sale sale = Sale.builder().build();
+    private Sale sale = Sale.builder().build();
 
     {
         expectedProducts.add(Product.builder()
@@ -104,37 +105,52 @@ class ProductServiceImplTest {
     }
 
     @Test
-    @DisplayName("When returns the correct product for each product_id")
-    void findProductByProductId_ForEachProductId_ReturnCorrectEntity() {
-        for (Product p: expectedProducts) {
-            when(productRepository.findProductByProductId(p.getProductId())).thenReturn(Optional.ofNullable(expectedProducts.get(p.getProductId() - 1)));
-            Product actual = productService.findProductByProductId(p.getProductId());
-            assertEquals(expectedProducts.get(p.getProductId() - 1), actual);
-        }
-        verify(productRepository, times(6)).findProductByProductId(anyInt());
+    @DisplayName("When return correct product entity with product_id = 1")
+    void findProductListDtoByProductId_ReturnsCorrectEntity() {
+        int testProductId = 1;
+
+        when(productService.findProductByProductId(testProductId)).thenReturn(expectedProducts.get(0));
+
+        var response = productController.findProductListDtoByProductId(testProductId);
+
+        assertNotNull(response);
+        assertEquals(expectedProducts.get(0), response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    @DisplayName("When looking for a non-existent product")
-    void findProductByProductId_NotExistentProductId_ThrowsProductNotFoundException() {
-        when(productRepository.findProductByProductId(anyInt())).thenReturn(Optional.empty());
-        assertThrows(ProductNotFoundException.class, () -> productService.findProductByProductId(anyInt()));
-        verify(productRepository, times(1)).findProductByProductId(anyInt());
+    @DisplayName("When product not found")
+    void findProductListDtoByProductId_ReturnsResponseStatusException_NotFound() {
+        when(productService.findProductByProductId(anyInt())).thenThrow(ProductNotFoundException.class);
+
+        ResponseStatusException exception =
+                assertThrows(ResponseStatusException.class, () -> {
+                    productController.findProductListDtoByProductId(anyInt());
+                });
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 
     @Test
-    @DisplayName("When returns the correct products")
-    void findAll_ReturnsCorrectEntities() {
-        when(productRepository.findAll()).thenReturn(expectedProducts);
-        assertEquals(expectedProducts, productService.findAll());
-        verify(productRepository, times(1)).findAll();
+    @DisplayName("When returns correct products")
+    void findAllProducts_ReturnsCorrectProductsEntity() {
+        when(productService.findAll()).thenReturn(expectedProducts);
+
+        var response = productController.findAllProducts();
+
+        assertNotNull(response);
+        assertEquals(expectedProducts, response.getBody());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
     @Test
-    @DisplayName("When returns empty list")
-    void findAll_ReturnsEmptyList_ThrowsProductNotFoundException() {
-        when(productRepository.findAll()).thenReturn(Collections.emptyList());
-        assertThrows(ProductNotFoundException.class, () -> productService.findAll());
-        verify(productRepository, times(1)).findAll();
+    @DisplayName("When no one product not returns")
+    void findAllProducts_ReturnsEmptyList_ThrowsResponseStatusException_NotFound() {
+        when(productService.findAll()).thenThrow(ProductNotFoundException.class);
+
+        ResponseStatusException exception =
+                assertThrows(ResponseStatusException.class, () -> {
+                    productController.findAllProducts();
+                });
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

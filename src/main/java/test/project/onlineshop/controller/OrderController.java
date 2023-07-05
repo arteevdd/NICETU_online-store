@@ -27,7 +27,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addNewOrders(@RequestBody List<OrderDto> orderDtos){
         try{
             orderService.addNewOrders(orderDtos);
@@ -37,7 +37,5 @@ public class OrderController {
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
-
-
     }
 }

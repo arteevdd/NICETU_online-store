@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import test.project.onlineshop.dto.ProductListDto;
 import test.project.onlineshop.entity.Category;
+import test.project.onlineshop.exception.ProductCategoryNotFoundException;
 import test.project.onlineshop.repository.CategoryRepository;
 import test.project.onlineshop.repository.ProductCategoryRepository;
 
@@ -28,16 +29,23 @@ public class ProductCategoryServiceImpl implements ProductCategoryService{
     @Override
     public List<ProductListDto> findProductCategoriesByCategoryId(Integer categoryId) {
         List<List<ProductListDto>> productCategoryList = new ArrayList<>();
-        productCategoryList.add((List<ProductListDto>) productCategoryRepository.findProductCategoriesByCategoryId(categoryId));
+        List<ProductListDto> closestProduct = (List<ProductListDto>) productCategoryRepository.findProductCategoriesByCategoryId(categoryId);
+        if (!closestProduct.isEmpty()) {
+            productCategoryList.add(closestProduct);
+        }
         List<Category> categories = (List<Category>) categoryRepository.findSubCategories(categoryId);
         if (!categories.isEmpty()) {
             for (Category category : categories) {
                 addProductsByCategory(category, productCategoryList);
             }
         }
-        return productCategoryList.stream()
-                .flatMap(Collection::stream)
-                .collect(Collectors.toList());
+        if (productCategoryList.isEmpty()) {
+            throw new ProductCategoryNotFoundException("Products with categoryId = " + categoryId + " not found!");
+        }else {
+            return productCategoryList.stream()
+                    .flatMap(Collection::stream)
+                    .collect(Collectors.toList());
+        }
     }
 
     public void addProductsByCategory(Category category, List<List<ProductListDto>> productCategoryList){

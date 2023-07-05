@@ -31,6 +31,11 @@ public class ProductServiceImpl implements ProductService{
 
     @Override
     public List<Product> findAll() {
-        return (List<Product>) productRepository.findAll();
+        List<Product> products = (List<Product>) productRepository.findAll();
+        if (products.isEmpty()) {
+            throw new ProductNotFoundException("Products not found!");
+        }else {
+            return products;
+        }
     }
 }

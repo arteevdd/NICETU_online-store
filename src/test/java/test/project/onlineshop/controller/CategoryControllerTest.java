@@ -1,38 +1,38 @@
-package test.project.onlineshop.service.category;
+package test.project.onlineshop.controller;
 
+import lombok.var;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.CategoryDto;
 import test.project.onlineshop.exception.CategoryNotFoundException;
-import test.project.onlineshop.repository.CategoryRepository;
+import test.project.onlineshop.service.category.CategoryService;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-@DisplayName("Service layer: Category")
-class CategoryServiceImplTest {
+@DisplayName("Web layer: Category")
+class CategoryControllerTest {
 
     @Mock
-    private CategoryRepository categoryRepository;
+    private CategoryService categoryService;
 
     @InjectMocks
-    private CategoryServiceImpl categoryService;
+    private CategoryController categoryController;
 
     @Test
-    @DisplayName("When returns the correct category tree")
-    void categoryTree_ReturnCorrectEntity() {
+    @DisplayName("When controller return correct category tree entity")
+    void categoryTree_ReturnsCorrectTreeEntity() {
         List<CategoryDto> expectedTree = new ArrayList<>();
-
         expectedTree.add(CategoryDto.builder()
                 .categoryId(1)
                 .parentCategoryId(null)
@@ -64,17 +64,24 @@ class CategoryServiceImplTest {
                 .build()
         );
 
-        when(categoryRepository.categoryTree()).thenReturn(expectedTree);
+        when(categoryService.categoryTree()).thenReturn(expectedTree);
 
-        assertEquals(expectedTree, categoryService.categoryTree());
-        verify(categoryRepository, times(1)).categoryTree();
+        var responseEntity = categoryController.categoryTree();
+
+        assertNotNull(responseEntity);
+        assertEquals(expectedTree, responseEntity.getBody());
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
     }
 
     @Test
-    @DisplayName("When returns the emptyList")
-    void categoryTree_ReturnsEmptyList_TrowsCategoryNotFoundException() {
-        when(categoryRepository.categoryTree()).thenReturn(Collections.emptyList());
-        assertThrows(CategoryNotFoundException.class, () -> categoryService.categoryTree());
-        verify(categoryRepository, times(1)).categoryTree();
+    @DisplayName("When the empty category tree returned")
+    void categoryTree_ReturnsEmptyList_TrowsResponseStatusException_NotFound() {
+        when(categoryService.categoryTree()).thenThrow(CategoryNotFoundException.class);
+
+        ResponseStatusException exception =
+                assertThrows(ResponseStatusException.class, () -> {
+                    categoryController.categoryTree();
+                });
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
     }
 }

@@ -1,18 +1,15 @@
 package test.project.onlineshop.service.order;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.test.annotation.Repeat;
 import test.project.onlineshop.dto.OrderDto;
 import test.project.onlineshop.entity.*;
 import test.project.onlineshop.exception.ProductNotFoundException;
@@ -22,7 +19,6 @@ import test.project.onlineshop.repository.OrderRepository;
 import test.project.onlineshop.repository.ProductRepository;
 import test.project.onlineshop.repository.UserRepository;
 import test.project.onlineshop.service.jms.EmailSenderService;
-import test.project.onlineshop.service.jms.EmailSenderServiceImpl;
 
 import java.util.Arrays;
 import java.util.Optional;

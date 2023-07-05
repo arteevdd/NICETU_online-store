@@ -29,8 +29,7 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/signup",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity registration(@RequestBody UserRequest user) {
         try {
             userService.registration(user);

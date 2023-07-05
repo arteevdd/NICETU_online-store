@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
                 Map<String, String> response = new HashMap<>();
                 response.put("firstName", loginedUser.get().getFirstName());
                 response.put("secondName", loginedUser.get().getSecondName());
+                response.put("email", loginedUser.get().getEmail());
                 response.put("token",
                         jwtTokenProvider.generateToken(
                                 authRequest.getEmail(),
