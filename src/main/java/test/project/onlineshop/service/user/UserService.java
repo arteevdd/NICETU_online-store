@@ -7,7 +7,7 @@ import java.util.Map;
 
 public interface UserService {
 
-    Map<String, String> registration(UserRequest user);
+    void registration(UserRequest user);
 
     Map<String, String> login(AuthRequest authRequest);
 }

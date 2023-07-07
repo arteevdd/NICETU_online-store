@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.AuthRequest;
 import test.project.onlineshop.dto.UserRequest;
-import test.project.onlineshop.exception.RoleNotFound;
-import test.project.onlineshop.exception.UserExistException;
+import test.project.onlineshop.exception.RoleNotFoundException;
+import test.project.onlineshop.exception.UserExistentException;
 import test.project.onlineshop.exception.UserNotFoundException;
 import test.project.onlineshop.service.user.UserService;
 
@@ -29,16 +29,16 @@ public class AuthenticationController {
     }
 
     @PostMapping(value = "/signup",
-            consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Map<String, String>> registration(@RequestBody UserRequest user) {
+            consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity registration(@RequestBody UserRequest user) {
         try {
-            return new ResponseEntity<>(userService.registration(user), HttpStatus.CREATED);
+            userService.registration(user);
+            return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
-        } catch (UserExistException e) {
+        } catch (UserExistentException e) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, e.getMessage());
-        } catch (RoleNotFound e) {
+        } catch (RoleNotFoundException e) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
         }
     }

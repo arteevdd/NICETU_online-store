@@ -1,6 +1,7 @@
 package test.project.onlineshop.security.jwt;
 
 import io.jsonwebtoken.*;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -21,6 +22,7 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
+@Setter
 @PropertySource("application.properties")
 public class JwtTokenProvider {
 

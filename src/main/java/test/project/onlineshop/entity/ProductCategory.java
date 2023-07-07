@@ -26,7 +26,6 @@ public class ProductCategory {
     @JoinColumn(name = "category_id")
     private Category categoryId;
 
-
     public ProductCategory() {
     }
 
