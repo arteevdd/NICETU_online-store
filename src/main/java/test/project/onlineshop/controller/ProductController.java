@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
-import test.project.onlineshop.dto.ProductListDto;
 import test.project.onlineshop.entity.Product;
 import test.project.onlineshop.exception.ProductNotFoundException;
 import test.project.onlineshop.service.product.ProductService;
@@ -27,9 +26,9 @@ public class ProductController {
     }
 
     @GetMapping("/{productId}")
-    public ResponseEntity<ProductListDto> findProductListDtoByProductId(@PathVariable("productId") Integer productId){
+    public ResponseEntity<Product> findProductListDtoByProductId(@PathVariable("productId") Integer productId){
         try {
-            return new ResponseEntity<>(productService.findProductListDtoByProductId(productId), HttpStatus.OK);
+            return new ResponseEntity<>(productService.findProductByProductId(productId), HttpStatus.OK);
         }catch (ProductNotFoundException e){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, e.getMessage());
         }

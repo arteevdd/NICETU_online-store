@@ -1,8 +1,3 @@
-CREATE TABLE "producer" (
-    producer_id SERIAL PRIMARY KEY NOT NULL,
-    name_producer VARCHAR(50) UNIQUE NOT NULL
-);
-
 CREATE TABLE sale (
     sale_id SERIAL PRIMARY KEY NOT NULL,
     sale_percent INTEGER NOT NULL
@@ -39,8 +34,6 @@ CREATE TABLE "product" (
     description VARCHAR(300) NOT NULL,
     road VARCHAR(255) NOT NULL,
     sale_id INTEGER NOT NULL,
-    producer_id INTEGER NOT NULL,
-    CONSTRAINT fk_product_producer FOREIGN KEY (producer_id) REFERENCES producer(producer_id),
     CONSTRAINT fk_product_sale FOREIGN KEY (sale_id) REFERENCES sale(sale_id)
 );
 

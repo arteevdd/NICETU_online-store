@@ -2,15 +2,18 @@ package test.project.onlineshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Collection;
+import java.util.Objects;
 
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
 @Table(name = "product")
 public class Product {
@@ -39,10 +42,6 @@ public class Product {
     private String road;
 
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "producer_id")
-    private Producer producerId;
-
-    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "sale_id")
     private Sale saleId;
 
@@ -57,13 +56,12 @@ public class Product {
     public Product() {
     }
 
-    public Product(String nameProduct, Double price, Integer count, String description, Double salePrice, Producer producerId, Sale saleId) {
+    public Product(String nameProduct, Double price, Integer count, String description, Double salePrice, Sale saleId) {
         this.nameProduct = nameProduct;
         this.price = price;
         this.count = count;
         this.description = description;
         this.salePrice = salePrice;
-        this.producerId = producerId;
         this.saleId = saleId;
     }
 
@@ -76,7 +74,23 @@ public class Product {
                 ", count=" + count +
                 ", description='" + description + '\'' +
                 ", salePrice=" + salePrice +
-                ", producerId=" + producerId +
+                ", road='" + road + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return Objects.equals(productId, product.productId) && Objects.equals(nameProduct, product.nameProduct)
+                && Objects.equals(price, product.price) && Objects.equals(count, product.count)
+                && Objects.equals(description, product.description) && Objects.equals(salePrice, product.salePrice)
+                && Objects.equals(road, product.road) && Objects.equals(saleId, product.saleId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productId, nameProduct, price, count, description, salePrice, road, saleId);
     }
 }

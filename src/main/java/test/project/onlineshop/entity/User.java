@@ -2,6 +2,7 @@ package test.project.onlineshop.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
@@ -16,8 +17,9 @@ import java.util.List;
 @Entity
 @Getter
 @Setter
+@Builder
 @AllArgsConstructor
-@Table(name = "user")
+@Table(name = "`user`")
 public class User implements UserDetails{
 
     @Id
