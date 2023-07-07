@@ -18,20 +18,20 @@
                 style="margin-bottom: 20px" 
                 class="catalog_item_add_to_cart__price"
             >
-            {{ prod.price }} Р
+            {{ prod.price.toLocaleString('ru-RU') }} ₽
             </h5>
             <h5 
                 v-else 
                 style="margin-bottom: 20px" 
                 class="catalog_item_add_to_cart__price"
             >
-            {{ prod.salePrice }} Р 
+            {{ prod.salePrice.toLocaleString('ru-RU') }} ₽
                 <small 
                     v-if="prod.salePrice != prod.price" 
                     class="text-muted" 
                     style="text-decoration: line-through"
                 >
-                {{ prod.price }} Р
+                {{ prod.price.toLocaleString('ru-RU') }} ₽
                 </small>
             </h5>
             <button 

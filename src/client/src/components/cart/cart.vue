@@ -23,7 +23,7 @@
         <div class="cart_total">
             <h5 style="margin-bottom: 20px">Your order</h5>
             <p style="font-size: 17px; margin-bottom: 5px">Количество товаров: {{ CART.reduce((a, b) => a + b.quantity, 0) }}</p>
-            <p style="font-size: 17px;">Итого: {{ CART.reduce((a, b) => a + b.quantity * b.salePrice, 0) }}Р</p>
+            <p style="font-size: 17px;">Итого: {{ (CART.reduce((a, b) => a + b.quantity * b.salePrice, 0)).toLocaleString('ru-RU') }} ₽</p>
             <button 
                 class="btn btn-primary" 
                 @click="Buy"
@@ -54,7 +54,7 @@ export default {
             'DELETE_FROM_CART',
             'DECREMENT_ITEM',
             'INCREMENT_ITEM',
-            'CLEAN_CART'
+            'CLEAR_CART'
         ]),
         deleteFromCart(index) {
             this.DELETE_FROM_CART(index)
@@ -101,7 +101,7 @@ export default {
                 }
             }
             else {
-                alert('Вы не авторизовалис!')
+                alert('Вы не авторизовались!')
             }
         }
     }

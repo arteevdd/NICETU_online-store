@@ -31,9 +31,7 @@
                 Delete
                 </button>
             </div>
-            <div class="cart_item__price">
-                <p>{{ cart_data_item.salePrice }}</p>
-            </div>
+            <h5>{{ (cart_data_item.salePrice).toLocaleString('ru-RU') }} ₽</h5>
     </div>
 </template>
 
@@ -109,13 +107,6 @@ export default {
                 margin: 0 5px 0 5px;
             }
         }
-    }
-    &__price {
-        width: 10%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
     }
 }   
 </style>
