@@ -4,14 +4,22 @@
         <catalogList/>
     </div>
     <div class="header_right">
-        <RouterLink v-if="Object.keys(user).length === 0" to="/login">
+        <RouterLink 
+            v-if="Object.keys(user).length === 0" 
+            to="/login"
+        >
             <div class="header_right_user">
                 Войти 
             </div>
         </RouterLink>
         <div v-else>
             {{ user.firstName }}
-            <button @click="exit" class="btn btn-link">Выйти</button>
+            <button 
+                @click="exit" 
+                class="btn btn-link"
+            >
+            Выйти
+            </button>
         </div>
         <RouterLink to="/cart">
             <div class="header_right_cart">
@@ -48,8 +56,8 @@ export default {
             'CLEAR_CART'
         ]),
         exit() {
+            localStorage.setItem(`${this.user.firstName}_cart`, JSON.stringify(this.CART))
             localStorage.removeItem('user')
-            localStorage.setItem('cart', JSON.stringify(this.CART))
             this.user = {}
             this.CLEAR_CART()
             router.push({name: 'home'})
@@ -59,7 +67,6 @@ export default {
         if (localStorage.getItem('user')) {
             this.user = JSON.parse( localStorage.user )
         }
-        console.log(this.user)
     }
 }
 </script>

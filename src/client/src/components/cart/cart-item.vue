@@ -1,23 +1,35 @@
 <template>
     <div class="cart_item">
-            <img class="cart_item__img" :src="require(`../../../public/images/${cart_data_item.road}`)" alt="img">
+            <img class="cart_item__img" 
+                :src="require(`../../../public/images/${cart_data_item.road}`)" 
+                alt="img"
+            >
             <div class="cart_item_about">
                 <h2>{{ cart_data_item.nameProduct }}</h2>
             </div>
             <div class="cart_item_right">
                 <div class="cart_item_right__quantity">
-                    <button @click="decrementItem" class="btn btn-outline-primary btn-sm">
-                        -
+                    <button 
+                        @click="decrementItem" 
+                        class="btn btn-outline-primary btn-sm"
+                    >
+                    -
                     </button>
                     <p class="cart_item_right__quantity_i">{{ cart_data_item.quantity }}</p>
-                    <button @click="incrementItem" class="btn btn-outline-primary btn-sm" :disabled="flagBtn">
-                        +
+                    <button 
+                        @click="incrementItem" 
+                        class="btn btn-outline-primary btn-sm" 
+                        :disabled="flagBtn"
+                    >
+                    +
                     </button>
                 </div>
                 <button 
                     class="cart_item_right__delete_btn btn btn-primary"
                     @click="deleteFromCart"
-                    >Delete</button>
+                >
+                Delete
+                </button>
             </div>
             <div class="cart_item__price">
                 <p>{{ cart_data_item.salePrice }}</p>
@@ -68,17 +80,16 @@ export default {
 
 <style lang="scss" scoped>
 .cart_item{
+    border-bottom: 1px solid lightgray;
     margin-bottom: 40px;
-    display: flex;
-    flex-direction: row;
-    min-width: 670px;
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr 1fr;
     height: 300px;
-    border-bottom: 1px solid grey;
-    justify-content: space-between;
+    align-items: center;
     &__img {
         margin: 15px;
         max-width: 220px;
-        max-height: 300px;
+        max-height: 260px;
     }
     &_about {
         margin-top: 30px;

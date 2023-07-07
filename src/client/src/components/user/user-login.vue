@@ -1,19 +1,38 @@
 <template>
 <div class="user_login" >
     <form>
-        <h4 class="user_login__i">Log in</h4>
+        <h4 class="user_login__i">Вход</h4>
         <div class="user_login__i form-group">
-          <label for="exampleInputEmail1">Email address</label>
-          <input  v-model="user.email" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            <label for="exampleInputEmail1">Почта</label>
+            <input 
+                v-model="user.email" 
+                type="text" 
+                class="form-control" 
+                id="exampleInputEmail1" 
+                aria-describedby="emailHelp" 
+                placeholder="Enter email"
+            >
         </div>
         <div class="user_login__i form-group">
-          <label for="exampleInputPassword1">Password</label>
-          <input v-model="user.password" type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+            <label for="exampleInputPassword1">Пароль</label>
+            <input 
+                v-model="user.password" 
+                type="password" 
+                class="form-control" 
+                id="exampleInputPassword1" 
+                placeholder="Password"
+            >
         </div>
-        <button type="button" @click="addUser()" class="btn btn-primary" style="margin-bottom: 10px">Log In</button>
+        <button 
+            type="button" 
+            @click="addUser()" 
+            class="btn btn-primary" 
+            style="margin-bottom: 10px"
+        >
+        Вход
+        </button>
         <br>
-        <RouterLink to="/regist">Registration</RouterLink>
+        <RouterLink to="/regist">Регистрация</RouterLink>
     </form>
 </div>
 </template>
@@ -49,8 +68,9 @@ export default {
                     }
                     });
                 this.$router.push({name: 'home'})
-                this.INSTALL_CART()
                 localStorage.user = JSON.stringify(user.data)
+                let name = JSON.parse( localStorage.user ).firstName 
+                this.INSTALL_CART(name)
             } catch (e) {
                 if(e.response.status === 401) {
                     alert('Неверный пароль!')

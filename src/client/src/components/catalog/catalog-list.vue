@@ -6,18 +6,34 @@
             id="dropdownMenuButton1" 
             data-bs-toggle="dropdown" 
             aria-expanded="false"
-            @click="drawTree">
-          Каталог
+            @click="drawTree"
+        >
+        Каталог
         </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-            <li v-for="category in tree[0]" :key="category">
-                <RouterLink style="text-decoration: none" :to="{ name: 'type', params: { type: category.categoryId}}">
-                    <h4 @click="setBrdcrm(category)" class="dropdown-item">{{ category.nameCategory }}</h4>
+        <ul 
+            class="dropdown-menu" 
+            aria-labelledby="dropdownMenuButton1"
+        >
+            <li 
+                v-for="category in tree[0]" 
+                :key="category"
+            >
+                <RouterLink 
+                    style="text-decoration: none" 
+                    :to="{ name: 'type', params: { type: category.categoryId}}"
+                >
+                    <h4 
+                        @click="setBrdcrm(category)" 
+                        class="dropdown-item"
+                    >
+                    {{ category.nameCategory }}
+                    </h4>
                 </RouterLink>
                 <Vtree 
                     :tree="tree"
                     :catId="category.categoryId"
-                    @setBrdcrm="setBrdcrm"/> 
+                    @setBrdcrm="setBrdcrm"
+                /> 
             </li>
         </ul>
     </div>
@@ -81,9 +97,7 @@ export default {
         },
         setBrdcrm(cat) {
             this.CLEAR_BRDCRMS()
-            console.log(cat)
             let brdcrm = this.CATEGORIES.find(el => el.categoryId === cat.categoryId)
-            console.log(brdcrm.categoryId)
             this.GET_PRODUCTS_BY_CATEGORY(brdcrm.categoryId)
             while (brdcrm.parentCategoryId) {
                 this.SET_BRDCRMS(brdcrm.nameCategory)

@@ -4,8 +4,19 @@
             <vBreadcrums/>
         </div>
         <div class="filter">
-            <span class="filter_value" v-if="isDefault" @click="isDefault = !isDefault; this.PRODUCTS.reverse();">Сначала дороже</span>
-            <span class="filter_value" v-else @click="isDefault = !isDefault; this.PRODUCTS.reverse();">Сначала дешевле</span>
+            <span 
+                class="filter_value" 
+                v-if="isDefault" 
+                @click="isDefault = !isDefault; this.PRODUCTS.reverse();"
+            >
+            Сначала дороже
+            </span>
+            <span 
+                class="filter_value" 
+                v-else @click="isDefault = !isDefault; this.PRODUCTS.reverse();"
+            >
+            Сначала дешевле
+            </span>
         </div>
         <div class="catalog_items">
             <v-catalog-item
@@ -36,13 +47,11 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'PRODUCTS',
-            'BRDCRMS'
+            'PRODUCTS'
         ])
     },
     methods: {
         ...mapActions([
-            'GET_PRODUCTS_FROM_API',
             'ADD_TO_CART'
         ]),
         addToCart(prod_cart) {
