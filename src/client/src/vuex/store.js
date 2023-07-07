@@ -42,7 +42,6 @@ const store = createStore({
         },
         DELETE_PROD: (state, index) => {
             state.cart.splice(index, 1)
-            console.log(state.cart)
         },
         DECREMENT_ITEM: (state, index) => {
             if (state.cart[index].quantity > 1) {
@@ -50,7 +49,6 @@ const store = createStore({
             }
             else if (state.cart[index].quantity === 1) {
                 state.cart.splice(index, 1)
-                console.log(state.cart)
             }
         },
         INCREMENT_ITEM: (state, index) => {
@@ -63,12 +61,35 @@ const store = createStore({
             state.brdcrms = []
         },
         CLEAR_CART: (state, mail) => {
-            state.cart = []
             localStorage.setItem(`${mail}_cart`, state.cart)
+            state.cart = []
         },
         INSTALL_CART: (state, mail) => {
             if (localStorage.getItem(`${mail}_cart`)) {
-                state.cart = JSON.parse(localStorage.getItem(`${mail}_cart`))
+                let userCart = JSON.parse(localStorage.getItem(`${mail}_cart`))
+                for (let i in userCart) {
+                    if (userCart[i].count > 0) {
+                        if (state.cart.length) {
+                            let isProdExist = false;
+                            state.cart.map(function(item) {
+                                if (item.productId === userCart[i].productId) {
+                                    isProdExist = true;
+                                    item.quantity++;
+                                    item.count--;
+                                }
+                            })
+                            if (!isProdExist) {
+                                state.cart.push(userCart[i]);
+                                state.cart[state.cart.length - 1].count -= 1;
+                                state.cart[state.cart.length - 1].quantity = 1;
+                            }
+                        } else {
+                            state.cart.push(userCart[i]);
+                            state.cart[state.cart.length - 1].count -= 1;
+                            state.cart[state.cart.length - 1].quantity = 1;
+                        }
+                    }
+                }
             }
         }
     },

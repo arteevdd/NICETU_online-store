@@ -74,29 +74,34 @@ export default {
                 }
                 cart.push(pro)
             }
-            try {
-                const user = await axios({
-                    method: 'post',
-                    url: 'http://localhost:8080/online-store/v1/orders',
-                    data: cart,
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8",
-                        'Authorization': 'Bearer ' + JSON.parse( localStorage.user ).token,
-                        'Cache-Control': null,
-                        'X-Requested-With': null,
+            if (localStorage.getItem('user')) {
+                try {
+                    const user = await axios({
+                        method: 'post',
+                        url: 'http://localhost:8080/online-store/v1/orders',
+                        data: cart,
+                        headers: {
+                            "Content-type": "application/json; charset=UTF-8",
+                            'Authorization': 'Bearer ' + JSON.parse( localStorage.user ).token,
+                            'Cache-Control': null,
+                            'X-Requested-With': null,
+                        }
+                        });
+                    alert('Заказ успешно оформлен!')
+                    this.CLEAR_CART(JSON.parse( localStorage.user ).email)
+                    return user
+                } catch (e) {
+                    if(e.response.status === 500) {
+                        alert('Попробуйте еще раз')
                     }
-                    });
-                alert('Заказ успешно оформлен!')
-                this.CLEAR_CART(JSON.parse( localStorage.user ).email)
-                return user
-            } catch (e) {
-                if(e.response.status === 500) {
-                    alert('Попробуйте еще раз')
+                    if(e.response.status === 400) {
+                        alert('Одного из товаров больше нет в наличии')
+                    }
+                    console.log(e)
                 }
-                if(e.response.status === 400) {
-                    alert('Одного из товаров больше нет в наличии')
-                }
-                console.log(e)
+            }
+            else {
+                alert('Вы не авторизовалис!')
             }
         }
     }
