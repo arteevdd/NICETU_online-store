@@ -18,6 +18,7 @@ services:
       test: echo "hello"
     networks:
       - network
+    restart: always
 
   backend:
     build: .
@@ -31,6 +32,7 @@ services:
       - network
 
   frontend:
+    container_name: frontend
     build: ./src/client
     restart: always
     ports:
