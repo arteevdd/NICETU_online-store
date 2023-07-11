@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.OrderDto;
 import test.project.onlineshop.exception.ProductNotFoundException;
-import test.project.onlineshop.exception.RejectedTransactionException;
 import test.project.onlineshop.service.order.OrderService;
 
 import java.util.List;
@@ -32,8 +31,8 @@ public class OrderController {
         try{
             orderService.addNewOrders(orderDtos);
             return new ResponseEntity<>(HttpStatus.CREATED);
-        } catch (RejectedTransactionException | ProductNotFoundException e) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        } catch (ProductNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage());
         } catch (IllegalArgumentException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

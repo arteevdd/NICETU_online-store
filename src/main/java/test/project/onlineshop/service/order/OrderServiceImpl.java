@@ -9,7 +9,6 @@ import test.project.onlineshop.entity.Order;
 import test.project.onlineshop.entity.Product;
 import test.project.onlineshop.entity.User;
 import test.project.onlineshop.exception.ProductNotFoundException;
-import test.project.onlineshop.exception.RejectedTransactionException;
 import test.project.onlineshop.repository.CartRepository;
 import test.project.onlineshop.repository.OrderRepository;
 import test.project.onlineshop.repository.ProductRepository;
@@ -53,36 +52,32 @@ public class OrderServiceImpl implements OrderService{
         List<Product> products = new ArrayList<>();
         int count = 1;
         double totalPrice = 0;
-        if (currentCart != null){
-            for (OrderDto order : orderDto) {
-                Optional<Product> currentProduct = productRepository.findProductByProductId(order.getProductId());
-                if (currentProduct.isPresent()) {
-                    if (currentProduct.get().getCount() > 0) {
-                        stringBuilder.append(count++ + ") " + currentProduct.get().getNameProduct() + " количество: " + order.getQuantity() + " цена: " + currentProduct.get().getSalePrice() + "\n");
-                        totalPrice += currentProduct.get().getPrice() * order.getQuantity();
-                        products.add(currentProduct.get());
-                        orderRepository.save(
-                                new Order(
-                                        currentProduct.get(),
-                                        currentCart,
-                                        order.getQuantity(),
-                                        currentProduct.get().getSalePrice() * order.getQuantity()
-                                )
-                        );
-                        productRepository.updateProductCountByProductId(order.getProductId(), currentProduct.get().getCount() - order.getQuantity());
-                    }else {
-                        throw new IllegalArgumentException("Negative product count");
-                    }
-                }else {
-                    throw new ProductNotFoundException("Product not found!");
+        for (OrderDto order : orderDto) {
+            Optional<Product> currentProduct = productRepository.findProductByProductId(order.getProductId());
+            if (currentProduct.isPresent()) {
+                if (currentProduct.get().getCount() > 0) {
+                    stringBuilder.append(count++ + ") " + currentProduct.get().getNameProduct() + " количество: " + order.getQuantity() + " цена: " + currentProduct.get().getSalePrice() + "\n");
+                    totalPrice += currentProduct.get().getPrice() * order.getQuantity();
+                    products.add(currentProduct.get());
+                    orderRepository.save(
+                            new Order(
+                                    currentProduct.get(),
+                                    currentCart,
+                                    order.getQuantity(),
+                                    currentProduct.get().getSalePrice() * order.getQuantity()
+                            )
+                    );
+                    productRepository.updateProductCountByProductId(order.getProductId(), currentProduct.get().getCount() - order.getQuantity());
+                } else {
+                    throw new IllegalArgumentException("Negative product count");
                 }
+            } else {
+                throw new ProductNotFoundException("Product not found!");
             }
-            emailSenderService.sendEmail(
-                    emailBuyer,
-                    "Покупка успешно совершена!",
-                    "Вы приобрели: " + products.size() + " продукта:\n" + stringBuilder + "Общая стоимость заказа: " + totalPrice + "\nУдачного пользования, ждём вас снова!");
-        }else {
-            throw new RejectedTransactionException("Buy transaction rejected!");
         }
+        emailSenderService.sendEmail(
+                emailBuyer,
+                "Покупка успешно совершена!",
+                "Вы приобрели: " + products.size() + " продукта:\n" + stringBuilder + "Общая стоимость заказа: " + totalPrice + "\nУдачного пользования, ждём вас снова!");
     }
 }
