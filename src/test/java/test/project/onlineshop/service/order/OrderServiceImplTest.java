@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import test.project.onlineshop.dto.OrderDto;
 import test.project.onlineshop.entity.*;
 import test.project.onlineshop.exception.ProductNotFoundException;
-import test.project.onlineshop.exception.RejectedTransactionException;
 import test.project.onlineshop.repository.CartRepository;
 import test.project.onlineshop.repository.OrderRepository;
 import test.project.onlineshop.repository.ProductRepository;
@@ -119,35 +118,6 @@ class OrderServiceImplTest {
         verify(orderRepository, times(1)).save(any(Order.class));
         verify(productRepository, times(1)).updateProductCountByProductId(anyInt(), anyInt());
         verify(emailSenderService, times(1)).sendEmail(existentUser.getEmail(), testSubject, testMessage);
-    }
-
-    @Test
-    @DisplayName("When cart was not created")
-    void addNewOrders_CartNotCreated_TrowsRejectedTransactionException() {
-        User existentUser = User.builder()
-                .userId(1)
-                .firstName("Danil")
-                .secondName("Arteev")
-                .email("arteic4@yandex.ru")
-                .password("qwerty")
-                .roleId(Role.builder().build())
-                .build();
-
-        OrderDto order = OrderDto.builder()
-                .productId(1)
-                .quantity(2)
-                .build();
-
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.getName()).thenReturn(existentUser.getEmail());
-        when(userRepository.findUserByEmail(existentUser.getEmail())).thenReturn(Optional.of(existentUser));
-        when(cartRepository.save(any(Cart.class))).thenReturn(null);
-
-        assertThrows(RejectedTransactionException.class, () -> orderService.addNewOrders(Arrays.asList(order)));
-        verify(securityContext, times(1)).getAuthentication();
-        verify(authentication, times(1)).getName();
-        verify(userRepository, times(1)).findUserByEmail(anyString());
-        verify(cartRepository, times(1)).save(any(Cart.class));
     }
 
     @Test

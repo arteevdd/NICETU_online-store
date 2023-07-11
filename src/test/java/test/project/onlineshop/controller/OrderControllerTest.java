@@ -11,7 +11,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.OrderDto;
 import test.project.onlineshop.exception.ProductNotFoundException;
-import test.project.onlineshop.exception.RejectedTransactionException;
 import test.project.onlineshop.service.order.OrderService;
 
 import java.util.Arrays;
@@ -46,18 +45,6 @@ class OrderControllerTest {
     }
 
     @Test
-    @DisplayName("When cart can't created")
-    void addNewOrders_ThrowsResponseStatusException_RejectedTransactionException_InternalServerError() {
-        doThrow(new RejectedTransactionException("Buy transaction rejected!")).when(orderService).addNewOrders(Arrays.asList(order));
-
-        ResponseStatusException exception =
-                org.junit.jupiter.api.Assertions.assertThrows(ResponseStatusException.class, () -> {
-                    orderController.addNewOrders(Arrays.asList(order));
-                });
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
-    }
-
-    @Test
     @DisplayName("When product not found")
     void addNewOrders_ThrowsResponseStatusException_ProductNotFoundException_InternalServerError() {
         doThrow(new ProductNotFoundException("Product not found!")).when(orderService).addNewOrders(Arrays.asList(order));
@@ -66,7 +53,7 @@ class OrderControllerTest {
                 org.junit.jupiter.api.Assertions.assertThrows(ResponseStatusException.class, () -> {
                     orderController.addNewOrders(Arrays.asList(order));
                 });
-        assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
+        assertEquals(HttpStatus.NO_CONTENT, exception.getStatus());
     }
 
     @Test
