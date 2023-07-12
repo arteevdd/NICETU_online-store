@@ -10,6 +10,7 @@ services:
       POSTGRES_PASSWORD: qwerty
       POSTGRES_DB: postgres
       POSTGRES_SCHEMA: public
+      TZ: Europe/Moscow
     volumes:
       - ./src/main/resources/db/migration/:/docker-entrypoint-initdb.d/
     ports:
@@ -18,6 +19,7 @@ services:
       test: echo "hello"
     networks:
       - network
+    restart: always
 
   backend:
     build: .
@@ -31,6 +33,7 @@ services:
       - network
 
   frontend:
+    container_name: frontend
     build: ./src/client
     restart: always
     ports:

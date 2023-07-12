@@ -6,7 +6,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.mail.MailException;
 import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -38,6 +37,6 @@ class EmailSenderServiceImplTest {
     @DisplayName("When email address not existent")
     void sendEmail_WasFailed() {
         doThrow(new MailSendException("Failed to send email!")).when(mailSender).send(any(SimpleMailMessage.class));
-        assertThrows(MailException.class, () -> emailSenderService.sendEmail("invalid@example.com", "nothing", "nothing"));
+        assertThrows(MailSendException.class, () -> emailSenderService.sendEmail("invalid@example.com", "nothing", "nothing"));
     }
 }

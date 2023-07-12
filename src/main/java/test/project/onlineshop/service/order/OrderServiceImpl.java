@@ -56,7 +56,7 @@ public class OrderServiceImpl implements OrderService{
             Optional<Product> currentProduct = productRepository.findProductByProductId(order.getProductId());
             if (currentProduct.isPresent()) {
                 if (currentProduct.get().getCount() > 0) {
-                    stringBuilder.append(count++ + ") " + currentProduct.get().getNameProduct() + " количество: " + order.getQuantity() + " цена: " + currentProduct.get().getSalePrice() + "\n");
+                    stringBuilder.append(count++ + ") " + currentProduct.get().getNameProduct() + "\n    Количество: " + order.getQuantity() + "\n    Цена: " + currentProduct.get().getSalePrice() + "\n");
                     totalPrice += currentProduct.get().getPrice() * order.getQuantity();
                     products.add(currentProduct.get());
                     orderRepository.save(
@@ -75,9 +75,21 @@ public class OrderServiceImpl implements OrderService{
                 throw new ProductNotFoundException("Product not found!");
             }
         }
+        String product = "";
+        switch(products.size()){
+            case 1:
+                product = " товар";
+                break;
+            case 2:
+            case 4:
+            case 3:
+                product = " товара";
+                break;
+            default: product = " товаров";
+        }
         emailSenderService.sendEmail(
                 emailBuyer,
                 "Покупка успешно совершена!",
-                "Вы приобрели: " + products.size() + " продукта:\n" + stringBuilder + "Общая стоимость заказа: " + totalPrice + "\nУдачного пользования, ждём вас снова!");
+                "Вы приобрели " + products.size() + product + ":\n" + stringBuilder + "Общая стоимость заказа: " + totalPrice + "\nУдачного пользования, ждём вас снова!");
     }
 }

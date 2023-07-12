@@ -18,10 +18,10 @@ CREATE TABLE "user" (
     CONSTRAINT fk_user_role FOREIGN KEY (role_id) REFERENCES "role"(role_id)
 );
 
--- Добавить поле TIMESTAMP
 CREATE TABLE cart (
     cart_id SERIAL PRIMARY KEY NOT NULL,
     user_id INTEGER NOT NULL,
+    transaction_time TIMESTAMP WITH TIME ZONE NOT NULL,
     CONSTRAINT fk_cart_user FOREIGN KEY (user_id) REFERENCES "user"(user_id)
 );
 
@@ -58,6 +58,6 @@ CREATE TABLE product_category (
     product_category_id SERIAL PRIMARY KEY NOT NULL,
     product_id INTEGER NOT NULL,
     category_id INTEGER NOT NULL,
-    CONSTRAINT fk_product_category_product FOREIGN KEY (product_id) REFERENCES product(product_id),
-    CONSTRAINT fk_product_category_category FOREIGN KEY (category_id) REFERENCES category(category_id)
+    CONSTRAINT fk_product_category_product FOREIGN KEY (product_id) REFERENCES product(product_id) ON DELETE CASCADE,
+    CONSTRAINT fk_product_category_category FOREIGN KEY (category_id) REFERENCES category(category_id) ON DELETE CASCADE
 );
