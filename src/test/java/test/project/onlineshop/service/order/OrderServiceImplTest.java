@@ -65,8 +65,8 @@ class OrderServiceImplTest {
     void addNewOrders_WillBeCreated() {
 
         String testSubject = "Покупка успешно совершена!";
-        String testMessage = "Вы приобрели: 1 продукта:\n" +
-                "1) Смартфон Apple iPhone 14 количество: 2 цена: 78291.0\n" +
+        String testMessage = "Вы приобрели 1 товар:\n" +
+                "1) Смартфон Apple iPhone 14\n    Количество: 2\n    Цена: 78291.0\n" +
                 "Общая стоимость заказа: 173980.0\n" +
                 "Удачного пользования, ждём вас снова!";
 

@@ -6,7 +6,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.OrderDto;
@@ -16,7 +15,6 @@ import test.project.onlineshop.service.order.OrderService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
 public class OrderController {
 
     private final OrderService orderService;
@@ -26,7 +24,7 @@ public class OrderController {
         this.orderService = orderService;
     }
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/orders", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity addNewOrders(@RequestBody List<OrderDto> orderDtos){
         try{
             orderService.addNewOrders(orderDtos);

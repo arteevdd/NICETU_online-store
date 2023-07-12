@@ -22,8 +22,10 @@ VALUES ('Смартфон Apple iPhone 14', 86990, 15, 2, 78291,
        ('Смартфон Huawei P50', 39999, 25, 2, 35991,
         'Huawei P40 Pro - устройство этого производителя можно отнести к топ-категории.', 'HuaweiP50.jpg');
 
-INSERT INTO cart (user_id)
-VALUES (1), (2), (1);
+INSERT INTO cart (user_id, transaction_time)
+VALUES (1, '2023-05-01 12:00:00'),
+       (2, '2023-05-07 13:20:00'),
+       (1, '2023-05-010 10:45:00');
 
 INSERT INTO "order" (product_id, quantity, price, cart_id)
 VALUES (1, 2, 156582.0, 1),

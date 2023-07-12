@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.CategoryDto;
@@ -14,7 +13,6 @@ import test.project.onlineshop.service.category.CategoryService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/categories")
 public class CategoryController {
 
     private final CategoryService categoryService;
@@ -24,7 +22,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
-    @GetMapping
+    @GetMapping("/categories")
     public ResponseEntity<List<CategoryDto>> categoryTree(){
         try {
             return new ResponseEntity<>(categoryService.categoryTree(), HttpStatus.OK);
