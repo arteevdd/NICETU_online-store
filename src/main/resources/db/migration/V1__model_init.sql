@@ -21,6 +21,7 @@ CREATE TABLE "user" (
 CREATE TABLE cart (
     cart_id SERIAL PRIMARY KEY NOT NULL,
     user_id INTEGER NOT NULL,
+    transaction_time TIMESTAMP WITH TIME ZONE NOT NULL,
     CONSTRAINT fk_cart_user FOREIGN KEY (user_id) REFERENCES "user"(user_id)
 );
 

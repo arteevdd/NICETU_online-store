@@ -10,6 +10,7 @@ import test.project.onlineshop.entity.Cart;
 import test.project.onlineshop.entity.Role;
 import test.project.onlineshop.entity.User;
 
+import java.sql.Timestamp;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -48,7 +49,7 @@ class CartRepositoryTest {
         assertNotEquals(Optional.empty(), existentUser);
         Iterable<Cart> allCartsBeforeSaveNewCart = cartRepository.findAll();
         existentUser.ifPresent(value -> cartRepository.save(Cart.builder()
-                .userId(existentUser.get())
+                .userId(existentUser.get()).transactionTime(new Timestamp(2023, 1, 2, 14, 12, 0, 0))
                 .build())
         );
         Iterable<Cart> allCartsAfterSaveNewCart = cartRepository.findAll();
