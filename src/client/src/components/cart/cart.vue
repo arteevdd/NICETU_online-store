@@ -1,4 +1,53 @@
 <template>
+    <div 
+        v-if="JSON.stringify(error) != '{}'"
+        class="modal fade show" 
+        id="exampleModalLive" 
+        tabindex="-1" 
+        aria-labelledby="exampleModalLiveLabel" 
+        style="display: block; background: rgba(0, 0, 0, .5);" 
+        aria-modal="true" 
+        role="dialog"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">{{ error.title }}</h5>
+                </div>
+                <div class="modal-body">
+                    <p>{{ error.text }}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click="$router.push('/login'); error = {}">Вход</button>
+                    <button type="button" class="btn btn-secondary" @click="error = {}">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div 
+        v-if="excellent"
+        class="modal fade show" 
+        id="exampleModalLive" 
+        tabindex="-1" 
+        aria-labelledby="exampleModalLiveLabel" 
+        style="display: block; background: rgba(0, 0, 0, .5);" 
+        aria-modal="true" 
+        role="dialog"
+    >
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLiveLabel">Заказ оформлен</h5>
+                </div>
+                <div class="modal-body">
+                    <p>Заказ успешно оформлен. Проверьте Вашу почту.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @click="excellent = !excellent">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="cart">
         <div class="cart__item">
             <CartItem
@@ -21,7 +70,7 @@
             </div>
         </div>
         <div class="cart_total">
-            <h5 style="margin-bottom: 20px">Your order</h5>
+            <h5 style="margin-bottom: 20px">Ваш заказ</h5>
             <p style="font-size: 17px; margin-bottom: 5px">Количество товаров: {{ CART.reduce((a, b) => a + b.quantity, 0) }}</p>
             <p style="font-size: 17px;">Итого: {{ (CART.reduce((a, b) => a + b.quantity * b.salePrice, 0)).toLocaleString('ru-RU') }} ₽</p>
             <button 
@@ -43,6 +92,12 @@ export default {
     name:'v-cart',
     components: {
     CartItem
+    },
+    data() {
+        return {
+            excellent: false,
+            error: {}
+        }
     },
     computed: {
         ...mapGetters([
@@ -87,21 +142,28 @@ export default {
                             'X-Requested-With': null,
                         }
                         });
-                    alert('Заказ успешно оформлен!')
+                    this.excellent = !this.excellent
                     this.CLEAR_CART(JSON.parse( localStorage.user ).email)
                     return user
                 } catch (e) {
                     if(e.response.status === 500) {
-                        alert('Попробуйте еще раз')
+                        this.error = {
+                            title: 'Сессия завершена',
+                            text: 'Авторизируйтесь снова'
+                        }
                     }
-                    if(e.response.status === 400) {
+                    if(e.response.status === 400 || e.response.status === 204) {
                         alert('Одного из товаров больше нет в наличии')
+                        this.CLEAR_CART(JSON.parse( localStorage.user ).email)
                     }
                     console.log(e)
                 }
             }
             else {
-                alert('Вы не авторизовались!')
+                this.error = {
+                    title: 'Вы не авторизованы!',
+                    text: 'Чтобы оформить заказ нужно авторизоваться'
+                }
             }
         }
     }

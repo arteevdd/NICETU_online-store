@@ -18,13 +18,19 @@
             Сначала дешевле
             </span>
         </div>
-        <div class="catalog_items">
+        <div 
+            v-if="PRODUCTS.length != 0" 
+            class="catalog_items"
+        >
             <v-catalog-item
                 v-for="(prod, index) in PRODUCTS" 
                 :key="index "
                 :prod="prod"
                 @addToCart="addToCart"
             />
+        </div>
+        <div v-else class="empty">
+            <h4>Продуктов нет в наличии</h4>
         </div>
     </div>
 </template>
@@ -81,5 +87,9 @@ export default {
 .catalog_items {
     border-top: 1px solid lightgray;
     margin: auto;
+}
+.empty{
+    text-align: center;
+    margin-top: 50px;
 }
 </style>
