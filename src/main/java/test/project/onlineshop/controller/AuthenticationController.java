@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.AuthRequest;
-import test.project.onlineshop.dto.UserRequest;
+import test.project.onlineshop.dto.RegistrationRequest;
 import test.project.onlineshop.exception.RoleNotFoundException;
 import test.project.onlineshop.exception.UserExistentException;
 import test.project.onlineshop.exception.UserNotFoundException;
@@ -30,7 +30,7 @@ public class AuthenticationController {
 
     @PostMapping(value = "/signup",
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity registration(@RequestBody UserRequest user) {
+    public ResponseEntity registration(@RequestBody RegistrationRequest user) {
         try {
             userService.registration(user);
             return new ResponseEntity<>(HttpStatus.CREATED);

@@ -67,7 +67,7 @@ class OrderServiceImplTest {
         String testSubject = "Покупка успешно совершена!";
         String testMessage = "Вы приобрели 1 товар:\n" +
                 "1) Смартфон Apple iPhone 14\n    Количество: 2\n    Цена: 78291.0\n" +
-                "Общая стоимость заказа: 173980.0\n" +
+                "Общая стоимость заказа: 156582.0\n" +
                 "Удачного пользования, ждём вас снова!";
 
         User existentUser = User.builder()

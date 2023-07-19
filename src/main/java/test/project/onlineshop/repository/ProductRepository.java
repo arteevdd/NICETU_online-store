@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import test.project.onlineshop.entity.Product;
 
-import javax.transaction.Transactional;
 import java.util.Optional;
 
 @Repository
@@ -17,7 +16,6 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
 
     Iterable<Product> findAll();
 
-    @Transactional
     @Modifying
     @Query("UPDATE Product p " +
             "SET p.count = :count WHERE p.productId = :productId")

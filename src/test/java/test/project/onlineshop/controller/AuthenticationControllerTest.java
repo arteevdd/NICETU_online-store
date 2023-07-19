@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.server.ResponseStatusException;
 import test.project.onlineshop.dto.AuthRequest;
-import test.project.onlineshop.dto.UserRequest;
+import test.project.onlineshop.dto.RegistrationRequest;
 import test.project.onlineshop.exception.RoleNotFoundException;
 import test.project.onlineshop.exception.UserExistentException;
 import test.project.onlineshop.exception.UserNotFoundException;
@@ -35,7 +35,7 @@ class AuthenticationControllerTest {
     @InjectMocks
     private AuthenticationController authenticationController;
 
-    UserRequest userRequest = UserRequest.builder()
+    RegistrationRequest registrationRequest = RegistrationRequest.builder()
             .firstName("Danil")
             .secondName("Arteev")
             .email("arteic4@yandex.ru")
@@ -50,20 +50,20 @@ class AuthenticationControllerTest {
     @Test
     @DisplayName("When the registration was successful")
     void registration_WasSuccessful_ReturnsResponseEntityCreated() {
-        doNothing().when(userService).registration(userRequest);
+        doNothing().when(userService).registration(registrationRequest);
 
-        ResponseEntity response = authenticationController.registration(userRequest);
+        ResponseEntity response = authenticationController.registration(registrationRequest);
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
     }
 
     @Test
     @DisplayName("When an invalid email pattern is passed")
     void registration_InvalidEmailPattern_ThrowsResponseStatusException_IllegalArgumentException_BadRequest() {
-        doThrow(IllegalArgumentException.class).when(userService).registration(userRequest);
+        doThrow(IllegalArgumentException.class).when(userService).registration(registrationRequest);
 
         ResponseStatusException exception =
                 assertThrows(ResponseStatusException.class, () -> {
-                    authenticationController.registration(userRequest);
+                    authenticationController.registration(registrationRequest);
                 });
         assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
     }
@@ -71,11 +71,11 @@ class AuthenticationControllerTest {
     @Test
     @DisplayName("When the user already exists")
     void registration_UserExistent_ThrowsResponseStatusException_UserExistentException_Conflict() {
-        doThrow(UserExistentException.class).when(userService).registration(userRequest);
+        doThrow(UserExistentException.class).when(userService).registration(registrationRequest);
 
         ResponseStatusException exception =
                 assertThrows(ResponseStatusException.class, () -> {
-                    authenticationController.registration(userRequest);
+                    authenticationController.registration(registrationRequest);
                 });
         assertEquals(HttpStatus.CONFLICT, exception.getStatus());
     }
@@ -83,11 +83,11 @@ class AuthenticationControllerTest {
     @Test
     @DisplayName("When the role is not found")
     void registration_RoleNotFound_ThrowsResponseStatusException_RoleNotFoundException_InternalServerError() {
-        doThrow(RoleNotFoundException.class).when(userService).registration(userRequest);
+        doThrow(RoleNotFoundException.class).when(userService).registration(registrationRequest);
 
         ResponseStatusException exception =
                 assertThrows(ResponseStatusException.class, () -> {
-                    authenticationController.registration(userRequest);
+                    authenticationController.registration(registrationRequest);
                 });
         assertEquals(HttpStatus.INTERNAL_SERVER_ERROR, exception.getStatus());
     }
@@ -96,9 +96,9 @@ class AuthenticationControllerTest {
     @DisplayName("When login was successful")
     void login_WasSuccessful() {
         Map<String, String> expectedResponse = new HashMap<>();
-        expectedResponse.put("firstName", userRequest.getFirstName());
-        expectedResponse.put("secondName", userRequest.getSecondName());
-        expectedResponse.put("email", userRequest.getEmail());
+        expectedResponse.put("firstName", registrationRequest.getFirstName());
+        expectedResponse.put("secondName", registrationRequest.getSecondName());
+        expectedResponse.put("email", registrationRequest.getEmail());
         expectedResponse.put("token", "token");
         when(userService.login(authRequest)).thenReturn(expectedResponse);
 

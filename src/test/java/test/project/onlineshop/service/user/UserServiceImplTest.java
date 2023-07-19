@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import test.project.onlineshop.dto.AuthRequest;
-import test.project.onlineshop.dto.UserRequest;
+import test.project.onlineshop.dto.RegistrationRequest;
 import test.project.onlineshop.entity.Role;
 import test.project.onlineshop.entity.User;
 import test.project.onlineshop.exception.RoleNotFoundException;
@@ -50,7 +50,7 @@ class UserServiceImplTest {
     @Test
     @DisplayName("When the registration was successful")
     void registration_WasSuccessful() {
-        UserRequest userRequest = UserRequest.builder()
+        RegistrationRequest registrationRequest = RegistrationRequest.builder()
                 .firstName("ValidFirstName")
                 .secondName("ValidSecondName")
                 .email("valid@email.com")
@@ -63,20 +63,20 @@ class UserServiceImplTest {
                 .build();
 
         User user = new User(
-                userRequest.getFirstName(),
-                userRequest.getSecondName(),
-                userRequest.getEmail(),
-                userRequest.getPassword(),
+                registrationRequest.getFirstName(),
+                registrationRequest.getSecondName(),
+                registrationRequest.getEmail(),
+                registrationRequest.getPassword(),
                 expectedRole
         );
 
-        when(userRepository.findUserByEmail(userRequest.getEmail())).thenReturn(Optional.empty());
+        when(userRepository.findUserByEmail(registrationRequest.getEmail())).thenReturn(Optional.empty());
         when(roleRepository.findRoleByRoleName(anyString())).thenReturn(Optional.ofNullable(expectedRole));
         when(userRepository.save(any(User.class))).thenReturn(user);
 
-        userService.registration(userRequest);
+        userService.registration(registrationRequest);
 
-        verify(userRepository, times(1)).findUserByEmail(userRequest.getEmail());
+        verify(userRepository, times(1)).findUserByEmail(registrationRequest.getEmail());
         verify(roleRepository, times(1)).findRoleByRoleName(anyString());
         verify(userRepository, times(1)).save(any(User.class));
     }
@@ -84,10 +84,10 @@ class UserServiceImplTest {
     @Test
     @DisplayName("When an invalid email pattern was passed during registration")
     void registration_EmailInvalid_ThrowsIllegalArgumentException() {
-        UserRequest userRequest = UserRequest.builder()
+        RegistrationRequest registrationRequest = RegistrationRequest.builder()
                 .email("invalid@email.r")
                 .build();
-        assertThrows(IllegalArgumentException.class, () -> userService.registration(userRequest));
+        assertThrows(IllegalArgumentException.class, () -> userService.registration(registrationRequest));
     }
 
     @Test
@@ -104,26 +104,26 @@ class UserServiceImplTest {
                 .password(passwordEncoder.encode("qwerty"))
                 .build();
 
-        UserRequest userRequest = UserRequest.builder()
+        RegistrationRequest registrationRequest = RegistrationRequest.builder()
                 .email("arteic4@yandex.ru")
                 .build();
 
         when(userRepository.findUserByEmail(anyString())).thenReturn(Optional.ofNullable(expectedUser));
 
-        assertThrows(UserExistentException.class, () -> userService.registration(userRequest));
+        assertThrows(UserExistentException.class, () -> userService.registration(registrationRequest));
         verify(userRepository, times(1)).findUserByEmail(anyString());
     }
 
     @Test
     @DisplayName("When ROLE_USER not existent")
     void registration_RoleUserNotExistent_ThrowsRoleNotFoundException() {
-        UserRequest userRequest = UserRequest.builder()
+        RegistrationRequest registrationRequest = RegistrationRequest.builder()
                 .email("notExistent@email.com")
                 .build();
 
         when(roleRepository.findRoleByRoleName(anyString())).thenReturn(Optional.empty());
 
-        assertThrows(RoleNotFoundException.class, () -> userService.registration(userRequest));
+        assertThrows(RoleNotFoundException.class, () -> userService.registration(registrationRequest));
         verify(roleRepository, times(1)).findRoleByRoleName(anyString());
     }
 

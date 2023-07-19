@@ -15,6 +15,7 @@ import test.project.onlineshop.repository.ProductRepository;
 import test.project.onlineshop.repository.UserRepository;
 import test.project.onlineshop.service.jms.EmailSenderService;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,6 +45,7 @@ public class OrderServiceImpl implements OrderService{
     }
 
     @Override
+    @Transactional
     public void addNewOrders(List<OrderDto> orderDto) {
         String emailBuyer = SecurityContextHolder.getContext().getAuthentication().getName();
         StringBuilder stringBuilder = new StringBuilder();
@@ -55,19 +57,20 @@ public class OrderServiceImpl implements OrderService{
         for (OrderDto order : orderDto) {
             Optional<Product> currentProduct = productRepository.findProductByProductId(order.getProductId());
             if (currentProduct.isPresent()) {
-                if (currentProduct.get().getCount() > 0) {
-                    stringBuilder.append(count++ + ") " + currentProduct.get().getNameProduct() + "\n    Количество: " + order.getQuantity() + "\n    Цена: " + currentProduct.get().getSalePrice() + "\n");
-                    totalPrice += currentProduct.get().getPrice() * order.getQuantity();
-                    products.add(currentProduct.get());
+                Product product = currentProduct.get();
+                if (product.getCount() > 0) {
+                    stringBuilder.append(count++ + ") " + product.getNameProduct() + "\n    Количество: " + order.getQuantity() + "\n    Цена: " + product.getSalePrice() + "\n");
+                    totalPrice += product.getSalePrice() * order.getQuantity();
+                    products.add(product);
                     orderRepository.save(
                             new Order(
-                                    currentProduct.get(),
+                                    product,
                                     currentCart,
                                     order.getQuantity(),
-                                    currentProduct.get().getSalePrice() * order.getQuantity()
+                                    product.getSalePrice() * order.getQuantity()
                             )
                     );
-                    productRepository.updateProductCountByProductId(order.getProductId(), currentProduct.get().getCount() - order.getQuantity());
+                    productRepository.updateProductCountByProductId(order.getProductId(), product.getCount() - order.getQuantity());
                 } else {
                     throw new IllegalArgumentException("Negative product count");
                 }
@@ -75,6 +78,7 @@ public class OrderServiceImpl implements OrderService{
                 throw new ProductNotFoundException("Product not found!");
             }
         }
+
         String product = "";
         switch(products.size()){
             case 1:
@@ -90,6 +94,7 @@ public class OrderServiceImpl implements OrderService{
         emailSenderService.sendEmail(
                 emailBuyer,
                 "Покупка успешно совершена!",
-                "Вы приобрели " + products.size() + product + ":\n" + stringBuilder + "Общая стоимость заказа: " + totalPrice + "\nУдачного пользования, ждём вас снова!");
+                "Вы приобрели " + products.size() + product + ":\n" + stringBuilder + "Общая стоимость заказа: " + totalPrice + "\nУдачного пользования, ждём вас снова!"
+        );
     }
 }

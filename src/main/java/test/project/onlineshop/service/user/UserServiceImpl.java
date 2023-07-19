@@ -6,7 +6,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import test.project.onlineshop.dto.AuthRequest;
-import test.project.onlineshop.dto.UserRequest;
+import test.project.onlineshop.dto.RegistrationRequest;
 import test.project.onlineshop.entity.Role;
 import test.project.onlineshop.entity.User;
 import test.project.onlineshop.exception.RoleNotFoundException;
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void registration(UserRequest user) {
+    public void registration(RegistrationRequest user) {
         String emailPattern = "^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
         if (user.getEmail().matches(emailPattern)){
             Optional<User> tempUser = userRepository.findUserByEmail(user.getEmail());
